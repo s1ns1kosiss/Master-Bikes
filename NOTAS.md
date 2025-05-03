@@ -50,21 +50,35 @@ Plataforma web para gestión integral de arriendo, venta y reparación de bicicl
 - Configuración de URLs principales
 - Actualización de requirements.txt con nuevas dependencias
 - Configuración de archivos estáticos y media
+- Cambio temporal a SQLite para desarrollo local
+
+### Migraciones y Modelos
+- Creación de migraciones iniciales para todas las apps
+- Implementación de modelos para Usuario, Producto, Arriendo y Reparación
+- Configuración de relaciones entre modelos
+- Registro de modelos en el admin de Django
+
+### URLs y Vistas
+- Configuración de URLs para arriendos, productos y reparaciones
+- Implementación de vistas básicas para cada módulo
+- Estructuración de rutas siguiendo las mejores prácticas
 
 ## Pendientes y Próximos Pasos
-- Implementar vistas y formularios para productos
-- Desarrollar sistema de arriendos
-- Crear sistema de reparaciones
-- Configurar autenticación y permisos por roles
+- Implementar formularios para productos
+- Desarrollar lógica de negocio para arriendos
+- Crear sistema de seguimiento de reparaciones
+- Configurar permisos específicos por roles
 - Implementar sistema de despachos
 - Desarrollar sistema de promociones
 - Crear módulo de reportes
+- Migrar a PostgreSQL en producción
 
 ## Tips para desarrollo colaborativo
 - Subir cambios frecuentemente a la rama `dev`
 - Usar mensajes de commit claros y siguiendo la convención
 - Documentar decisiones importantes en este archivo
+- Mantener actualizado el archivo NOTAS.md con los avances
 
 ---
 
-*Actualizado: [Fecha actual] - Implementación de sistema de usuarios y estructura base* 
+*Actualizado: 19/03/2024 - Implementación de migraciones y configuración de URLs y vistas* 
