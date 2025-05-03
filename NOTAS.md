@@ -32,11 +32,33 @@ Plataforma web para gestión integral de arriendo, venta y reparación de bicicl
 ### Reparacion
 - usuario, producto, tecnico, descripcion_problema, estado, fecha_solicitud, fecha_inicio, fecha_fin, costo, observaciones
 
+## Avances Realizados
+### Estructura Base y Templates
+- Implementación de base.html con navbar responsive y footer
+- Creación de home.html con secciones principales
+- Configuración de vistas y URLs principales
+- Integración de Bootstrap 5 y Font Awesome
+
+### Sistema de Usuarios
+- Implementación de formularios de registro y edición
+- Creación de vistas para perfil y edición de usuario
+- Configuración de URLs para gestión de usuarios
+- Integración de django-widget-tweaks para mejor presentación de formularios
+
+### Configuración del Proyecto
+- Actualización de settings.py con apps y configuraciones
+- Configuración de URLs principales
+- Actualización de requirements.txt con nuevas dependencias
+- Configuración de archivos estáticos y media
+
 ## Pendientes y Próximos Pasos
-- Definir modelos para despachos, promociones y reportes
-- Crear estructura de templates y archivos estáticos (Bootstrap, base.html)
-- Implementar vistas, formularios y lógica de negocio para cada módulo
-- Configurar control de acceso por roles
+- Implementar vistas y formularios para productos
+- Desarrollar sistema de arriendos
+- Crear sistema de reparaciones
+- Configurar autenticación y permisos por roles
+- Implementar sistema de despachos
+- Desarrollar sistema de promociones
+- Crear módulo de reportes
 
 ## Tips para desarrollo colaborativo
 - Subir cambios frecuentemente a la rama `dev`
@@ -45,4 +67,4 @@ Plataforma web para gestión integral de arriendo, venta y reparación de bicicl
 
 ---
 
-*Actualiza este archivo cada vez que tomes una decisión importante o avances con una nueva funcionalidad.* 
+*Actualizado: [Fecha actual] - Implementación de sistema de usuarios y estructura base* 
