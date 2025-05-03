@@ -2,67 +2,134 @@
 
 Plataforma web para gestión integral de arriendo, venta y reparación de bicicletas.
 
-## Requisitos
+## Requisitos Previos
 
-- Python 3.10+
-- (Opcional) PostgreSQL para producción
-- pip
+- Python 3.8 o superior
+- pip (gestor de paquetes de Python)
+- Git
+- PostgreSQL (opcional, para producción)
 
 ## Instalación
 
-1. Clona el repositorio:
+1. **Clonar el repositorio**
    ```bash
    git clone https://github.com/s1ns1kosiss/Master-Bikes.git
    cd Master-Bikes
    ```
 
-2. Crea y activa un entorno virtual:
-   - En Windows:
-     ```bash
-     python -m venv venv
-     venv\Scripts\activate
-     ```
-   - En Mac/Linux:
-     ```bash
-     python3 -m venv venv
-     source venv/bin/activate
-     ```
+2. **Crear y activar entorno virtual**
+   ```bash
+   # Windows
+   python -m venv venv
+   venv\Scripts\activate
 
-3. Instala las dependencias:
+   # Linux/Mac
+   python3 -m venv venv
+   source venv/bin/activate
+   ```
+
+3. **Instalar dependencias**
    ```bash
    pip install -r requirements.txt
    ```
 
-4. (Opcional) Configura la base de datos en `settings.py` si usarás PostgreSQL.
+4. **Configurar base de datos**
+   - Para desarrollo (SQLite):
+     - No se requiere configuración adicional
+     - La base de datos se creará automáticamente
 
-5. Aplica migraciones:
+   - Para producción (PostgreSQL):
+     - Instalar PostgreSQL
+     - Crear base de datos
+     - Configurar variables de entorno o modificar settings.py
+
+5. **Aplicar migraciones**
    ```bash
    python manage.py migrate
    ```
 
-6. Ejecuta el servidor de desarrollo:
+6. **Crear superusuario**
+   ```bash
+   python manage.py createsuperuser
+   ```
+
+7. **Iniciar servidor de desarrollo**
    ```bash
    python manage.py runserver
    ```
 
----
-
 ## Estructura del Proyecto
 
-- `usuarios/` - Gestión de usuarios y roles
-- `productos/` - Catálogo de bicicletas y accesorios
-- `arriendos/` - Gestión de arriendos
-- `reparaciones/` - Servicios técnicos
-- `despachos/` - Entregas y despachos
-- `promociones/` - Campañas y correos
-- `reportes/` - Visualización de datos
+```
+masterbikes/
+├── usuarios/          # Gestión de usuarios y autenticación
+├── productos/         # Catálogo de bicicletas y accesorios
+├── arriendos/         # Gestión de arriendos
+├── reparaciones/      # Servicio técnico
+├── despachos/         # Gestión de entregas
+├── promociones/       # Sistema de promociones
+├── reportes/          # Generación de reportes
+└── templates/         # Plantillas HTML
+```
 
----
+## Dependencias Principales
 
-## Notas
+- Django 5.2
+- Pillow (para manejo de imágenes)
+- django-widget-tweaks (para formularios)
+- psycopg2-binary (para PostgreSQL)
 
-- Por defecto, la base de datos está configurada para PostgreSQL. Si no tienes PostgreSQL, puedes cambiar a SQLite en `settings.py` para desarrollo local.
-- Recuerda crear un superusuario para acceder al panel de administración:
-  ```bash
-  python manage.py createsuperuser
-  ``` 
+## Desarrollo
+
+1. **Crear una rama para desarrollo**
+   ```bash
+   git checkout -b dev
+   ```
+
+2. **Instalar dependencias de desarrollo**
+   ```bash
+   pip install -r requirements-dev.txt
+   ```
+
+3. **Ejecutar pruebas**
+   ```bash
+   python manage.py test
+   ```
+
+## Despliegue
+
+1. **Configurar variables de entorno**
+   - Crear archivo .env con las configuraciones necesarias
+   - No subir .env al repositorio
+
+2. **Configurar base de datos PostgreSQL**
+   - Crear base de datos
+   - Configurar usuario y permisos
+   - Actualizar settings.py
+
+3. **Recolectar archivos estáticos**
+   ```bash
+   python manage.py collectstatic
+   ```
+
+## Contribución
+
+1. Fork el repositorio
+2. Crear una rama para tu feature (`git checkout -b feature/AmazingFeature`)
+3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abrir un Pull Request
+
+## Notas Adicionales
+
+- Revisar NOTAS.md para más detalles sobre el proyecto
+- Seguir las convenciones de commit establecidas
+- Mantener la documentación actualizada
+
+## Soporte
+
+Para soporte, contactar a [tu-email@ejemplo.com]
+
+## Licencia
+
+Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE.md](LICENSE.md) para más detalles. 
