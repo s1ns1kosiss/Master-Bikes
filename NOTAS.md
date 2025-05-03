@@ -73,6 +73,35 @@ Plataforma web para gestión integral de arriendo, venta y reparación de bicicl
 - Crear módulo de reportes
 - Migrar a PostgreSQL en producción
 
+## Plan de Trabajo en Computador de Casa
+### Configuración de PostgreSQL
+1. Clonar repositorio
+2. Instalar dependencias del proyecto
+3. Configurar PostgreSQL:
+   - Crear base de datos
+   - Configurar usuario y permisos
+   - Actualizar settings.py con credenciales de PostgreSQL
+4. Migrar datos de SQLite a PostgreSQL:
+   - Crear script de migración
+   - Verificar integridad de datos
+   - Probar funcionalidades con nueva base de datos
+
+### Desarrollo con PostgreSQL
+1. Implementar formularios para productos
+2. Desarrollar lógica de negocio para arriendos
+3. Crear sistema de seguimiento de reparaciones
+4. Configurar permisos específicos por roles
+5. Implementar sistema de despachos
+6. Desarrollar sistema de promociones
+7. Crear módulo de reportes
+
+### Pruebas y Optimización
+1. Realizar pruebas de rendimiento
+2. Optimizar consultas a la base de datos
+3. Implementar índices necesarios
+4. Configurar respaldos automáticos
+5. Documentar procedimientos de mantenimiento
+
 ## Tips para desarrollo colaborativo
 - Subir cambios frecuentemente a la rama `dev`
 - Usar mensajes de commit claros y siguiendo la convención
