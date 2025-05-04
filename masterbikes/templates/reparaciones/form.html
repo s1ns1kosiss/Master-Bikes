@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if form.instance.pk %}Editar Reparación{% else %}Nueva Reparación{% endif %} - MasterBikes{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title mb-4">
+                        {% if form.instance.pk %}
+                            Editar Reparación
+                        {% else %}
+                            Nueva Reparación
+                        {% endif %}
+                    </h2>
+
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {% for error in form.non_field_errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        <div class="mb-3">
+                            <label for="{{ form.producto.id_for_label }}" class="form-label">Producto</label>
+                            {{ form.producto }}
+                            {% if form.producto.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.producto.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.descripcion_problema.id_for_label }}" class="form-label">Descripción del problema</label>
+                            {{ form.descripcion_problema }}
+                            {% if form.descripcion_problema.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.descripcion_problema.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        {% if user.is_staff %}
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="{{ form.tecnico.id_for_label }}" class="form-label">Técnico asignado</label>
+                                    {{ form.tecnico }}
+                                    {% if form.tecnico.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {% for error in form.tecnico.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="{{ form.costo.id_for_label }}" class="form-label">Costo</label>
+                                    {{ form.costo }}
+                                    {% if form.costo.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {% for error in form.costo.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="{{ form.estado.id_for_label }}" class="form-label">Estado</label>
+                                {{ form.estado }}
+                                {% if form.estado.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {% for error in form.estado.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+
+                        <div class="mb-3">
+                            <label for="{{ form.observaciones.id_for_label }}" class="form-label">Observaciones</label>
+                            {{ form.observaciones }}
+                            {% if form.observaciones.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.observaciones.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="{% url 'reparaciones:lista' %}" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i>Guardar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
