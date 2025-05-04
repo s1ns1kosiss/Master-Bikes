@@ -142,12 +142,12 @@ body.dark-mode .register-link:hover, body.dark-mode .forgot-link:hover {
 }
 
 .btn-login {
-    background: linear-gradient(90deg, #4f46e5 0%, #6366f1 100%);
+    background: linear-gradient(90deg, #6366f1 0%, #4f46e5 100%);
+    box-shadow: 0 4px 16px rgba(79, 70, 229, 0.13), 0 0 16px 2px #818cf8aa;
+    transition: all 0.3s cubic-bezier(.39,.575,.56,1), box-shadow 0.3s;
     border: none;
-    transition: all 0.3s cubic-bezier(.39,.575,.56,1);
     font-weight: 600;
     letter-spacing: 1px;
-    box-shadow: 0 4px 16px rgba(79, 70, 229, 0.13);
     position: relative;
     overflow: hidden;
     display: flex;
@@ -187,8 +187,8 @@ body.dark-mode .register-link:hover, body.dark-mode .forgot-link:hover {
     left: 120%;
 }
 .btn-login:hover {
-    transform: translateY(-2px) scale(1.03);
-    box-shadow: 0 10px 24px rgba(79, 70, 229, 0.18);
+    box-shadow: 0 10px 32px #6366f1cc, 0 0 24px 4px #818cf8cc;
+    filter: brightness(1.08);
 }
 
 .register-link {
@@ -292,11 +292,74 @@ body.dark-mode .register-link:hover, body.dark-mode .forgot-link:hover {
 .toggle-darkmode:hover {
     background: #e0e7ff;
 }
+
+.login-bg {
+    background: linear-gradient(120deg, #f8fafc 0%, #e0e7ff 100%);
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+.login-bg::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: url('data:image/svg+xml;utf8,<svg width="100%25" height="100%25" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="2" fill="%234f46e522"/><circle cx="80" cy="80" r="1.5" fill="%234f46e522"/><circle cx="200" cy="60" r="1.5" fill="%234f46e522"/><circle cx="400" cy="100" r="2" fill="%234f46e522"/></svg>');
+    opacity: 0.10;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Switch moderno para Recordarme */
+.form-switch .form-check-input {
+    width: 2.5em;
+    height: 1.3em;
+    background-color: #e0e7ff;
+    border-radius: 1em;
+    border: 1px solid #c7d2fe;
+    transition: background 0.3s, border 0.3s;
+}
+.form-switch .form-check-input:checked {
+    background-color: #6366f1;
+    border-color: #6366f1;
+}
+.form-switch .form-check-input:focus {
+    box-shadow: 0 0 0 0.2rem #6366f155;
+}
+.form-switch .form-check-label {
+    margin-left: 0.5em;
+    font-weight: 500;
+}
+
+/* Tooltip para mostrar/ocultar contraseña */
+.show-password[aria-label]:hover::after {
+    content: attr(aria-label);
+    position: absolute;
+    right: 110%;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #6366f1;
+    color: #fff;
+    padding: 0.2em 0.7em;
+    border-radius: 0.5em;
+    font-size: 0.85em;
+    white-space: nowrap;
+    z-index: 10;
+    opacity: 0.95;
+}
+
+/* Feedback de error más visible */
+.alert-danger, .alert-error {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fca5a5;
+    font-weight: 500;
+    font-size: 1.05em;
+}
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="login-container position-relative" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem 0;">
+<div class="login-bg position-relative d-flex align-items-center justify-content-center" style="min-height: 100vh;">
     <div class="floating-shapes">
         <div class="shape"></div>
         <div class="shape"></div>
@@ -306,14 +369,15 @@ body.dark-mode .register-link:hover, body.dark-mode .forgot-link:hover {
     <div class="container d-flex align-items-center justify-content-center" style="min-height: 70vh;">
         <div class="row justify-content-center w-100">
             <div class="col-md-7 col-lg-5">
-                <div class="login-card card rounded-4 overflow-hidden" id="loginCard" style="box-shadow: 0 8px 32px 0 rgba(79, 70, 229, 0.13), 0 1.5rem 3rem rgba(0,0,0,0.10);">
+                <div class="login-card card rounded-4 overflow-hidden animate__animated animate__fadeInUp animate__faster" id="loginCard" style="box-shadow: 0 12px 48px 0 rgba(79, 70, 229, 0.18), 0 1.5rem 3rem rgba(0,0,0,0.10);">
                     <div class="inner-shadow"></div>
                     <div class="text-center pt-4">
-                        <div class="brand-logo animate__animated animate__fadeInDown animate__slow">
+                        <div class="brand-logo animate__animated animate__pulse animate__infinite animate__slow">
                             <i class="fas fa-bicycle" aria-hidden="true"></i>
                         </div>
                         <div class="brand-title">MasterBikes</div>
                         <div class="slogan">Tu viaje comienza aquí</div>
+                        <div class="welcome-text text-muted mb-2">¡Nos alegra verte de nuevo! Ingresa para pedalear hacia nuevas aventuras.</div>
                     </div>
                     <div class="card-body p-4 p-sm-5">
                         {% if messages %}
@@ -336,21 +400,23 @@ body.dark-mode .register-link:hover, body.dark-mode .forgot-link:hover {
                                     Por favor ingresa tu nombre de usuario
                                 </div>
                             </div>
-                            <div class="form-floating mb-4">
-                                <input type="password" class="form-control rounded-3" id="password" name="password" placeholder="Contraseña" required aria-label="Contraseña">
+                            <div class="form-floating mb-4 position-relative">
+                                <input type="password" class="form-control rounded-3" id="password" name="password" placeholder="Contraseña" required aria-label="Contraseña" autocomplete="current-password">
                                 <label for="password">
                                     <i class="fas fa-lock text-muted me-2"></i>Contraseña
                                 </label>
+                                <button type="button" tabindex="-1" class="btn btn-sm btn-link show-password position-absolute end-0 top-50 translate-middle-y me-2" style="z-index:3;" aria-label="Mostrar u ocultar contraseña"><i class="fas fa-eye"></i></button>
+                                <div class="caps-lock-indicator text-danger small mt-1" style="display:none;">¡Mayúsculas activadas!</div>
                                 <div class="invalid-feedback">
                                     Por favor ingresa tu contraseña
                                 </div>
                             </div>
-                            <div class="form-check mb-3 text-start">
-                                <input type="checkbox" class="form-check-input" id="remember_me" name="remember_me">
-                                <label class="form-check-label" for="remember_me">Recordarme</label>
-                            </div>
-                            <div class="mb-3 text-end">
-                                <a href="{% url 'usuarios:password_reset' %}" class="forgot-link">¿Olvidaste tu contraseña?</a>
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="form-switch me-auto">
+                                    <input type="checkbox" class="form-check-input" id="remember_me" name="remember_me" aria-label="Recordarme">
+                                    <label class="form-check-label" for="remember_me">Recordarme</label>
+                                </div>
+                                <a href="{% url 'usuarios:password_reset' %}" class="forgot-link ms-2"><i class="fas fa-question-circle me-1"></i>¿Olvidaste tu contraseña?</a>
                             </div>
                             <div class="d-grid gap-2 mb-4">
                                 <button type="submit" class="btn btn-login btn-lg text-white rounded-3" aria-label="Iniciar sesión" id="loginBtn">
@@ -376,14 +442,29 @@ body.dark-mode .register-link:hover, body.dark-mode .forgot-link:hover {
 
 {% block extra_js %}
 <script>
-// Modo oscuro toggle
-const toggleBtn = document.getElementById('toggleDarkMode');
-toggleBtn.addEventListener('click', function() {
-    document.body.classList.toggle('dark-mode');
-    this.querySelector('i').classList.toggle('fa-moon');
-    this.querySelector('i').classList.toggle('fa-sun');
+// Mostrar/ocultar contraseña
+const showPasswordBtn = document.querySelector('.show-password');
+const passwordInput = document.getElementById('password');
+showPasswordBtn.addEventListener('click', function() {
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        this.querySelector('i').classList.remove('fa-eye');
+        this.querySelector('i').classList.add('fa-eye-slash');
+    } else {
+        passwordInput.type = 'password';
+        this.querySelector('i').classList.remove('fa-eye-slash');
+        this.querySelector('i').classList.add('fa-eye');
+    }
 });
-
+// Caps lock indicator
+passwordInput.addEventListener('keyup', function(e) {
+    const caps = document.querySelector('.caps-lock-indicator');
+    if (e.getModifierState && e.getModifierState('CapsLock')) {
+        caps.style.display = 'block';
+    } else {
+        caps.style.display = 'none';
+    }
+});
 // Validación de formulario y microinteracciones
 (function () {
     'use strict'
@@ -409,7 +490,6 @@ toggleBtn.addEventListener('click', function() {
             }, false)
         })
 })();
-
 // Shake si hay error
 window.addEventListener('DOMContentLoaded', function() {
     var error = document.getElementById('loginError');
@@ -421,7 +501,6 @@ window.addEventListener('DOMContentLoaded', function() {
         }, 1200);
     }
 });
-
 // Borde animado en input activo
 const inputs = document.querySelectorAll('.form-control');
 inputs.forEach(input => {
