@@ -27,13 +27,26 @@ Plataforma web para gestión integral de arriendo, venta y reparación de bicicl
    python3 -m venv venv
    source venv/bin/activate
    ```
+   > **Nota**: El entorno virtual debe estar activado para todos los comandos siguientes.
 
 3. **Instalar dependencias**
    ```bash
+   # Para desarrollo
    pip install -r requirements.txt
+
+   # Para desarrollo con herramientas adicionales
+   pip install -r requirements-dev.txt
    ```
 
-4. **Configurar base de datos**
+4. **Configurar variables de entorno**
+   ```bash
+   # Copiar el archivo de ejemplo
+   cp .env.example .env
+   
+   # Editar el archivo .env con tus configuraciones
+   ```
+
+5. **Configurar base de datos**
    - Para desarrollo (SQLite):
      - No se requiere configuración adicional
      - La base de datos se creará automáticamente
@@ -41,19 +54,21 @@ Plataforma web para gestión integral de arriendo, venta y reparación de bicicl
    - Para producción (PostgreSQL):
      - Instalar PostgreSQL
      - Crear base de datos
-     - Configurar variables de entorno o modificar settings.py
+     - Configurar variables de entorno en .env
+     - Actualizar settings.py si es necesario
 
-5. **Aplicar migraciones**
+6. **Aplicar migraciones**
    ```bash
    python manage.py migrate
    ```
 
-6. **Crear superusuario**
+7. **Crear superusuario**
    ```bash
    python manage.py createsuperuser
    ```
+   > **Nota**: El superusuario es necesario para acceder al panel de administración.
 
-7. **Iniciar servidor de desarrollo**
+8. **Iniciar servidor de desarrollo**
    ```bash
    python manage.py runserver
    ```
@@ -78,6 +93,7 @@ masterbikes/
 - Pillow (para manejo de imágenes)
 - django-widget-tweaks (para formularios)
 - psycopg2-binary (para PostgreSQL)
+- python-dotenv (para variables de entorno)
 
 ## Desarrollo
 
@@ -96,16 +112,29 @@ masterbikes/
    python manage.py test
    ```
 
+4. **Formatear código**
+   ```bash
+   # Formatear con black
+   black .
+
+   # Ordenar imports
+   isort .
+
+   # Verificar estilo
+   flake8
+   ```
+
 ## Despliegue
 
 1. **Configurar variables de entorno**
    - Crear archivo .env con las configuraciones necesarias
    - No subir .env al repositorio
+   - Usar .env.example como referencia
 
 2. **Configurar base de datos PostgreSQL**
    - Crear base de datos
    - Configurar usuario y permisos
-   - Actualizar settings.py
+   - Actualizar variables de entorno
 
 3. **Recolectar archivos estáticos**
    ```bash
@@ -125,6 +154,8 @@ masterbikes/
 - Revisar NOTAS.md para más detalles sobre el proyecto
 - Seguir las convenciones de commit establecidas
 - Mantener la documentación actualizada
+- Asegurarse de que el entorno virtual esté activado
+- No subir archivos sensibles al repositorio
 
 ## Soporte
 
