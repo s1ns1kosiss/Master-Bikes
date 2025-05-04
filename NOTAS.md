@@ -173,18 +173,23 @@ Plataforma web para gestión integral de arriendo, venta y reparación de bicicl
 - Mejorada la página de inicio
 - Implementado sistema de mensajes
 
-### Mejoras visuales y accesibilidad en login (mayo 2025)
-- Fondo del login con degradado y textura sutil para mayor personalidad.
-- Tarjeta de login más compacta, con sombra profunda y animación de entrada.
-- Botón de login con gradiente vibrante y efecto glow al hacer hover.
-- Switch moderno para la opción “Recordarme” (en vez de checkbox clásico).
-- Tooltip accesible en el icono de mostrar/ocultar contraseña.
-- Microcopy motivacional personalizado bajo el slogan.
-- Feedback de error más visible y accesible.
-- Mejoras de accesibilidad: `aria-labels` en inputs y botones.
-- Responsive optimizado para móvil.
-- Detalles visuales extra: icono en “¿Olvidaste tu contraseña?”, mejor alineación de elementos.
-- Funcionalidad extra: mostrar/ocultar contraseña y aviso de “Caps Lock activado”.
+### Mejoras visuales y de experiencia en el registro de usuarios (junio 2025)
+- Rediseño completo del formulario de registro para mayor claridad, orden y atractivo visual.
+- Agrupación de campos en secciones: Datos personales, Datos de acceso y Seguridad, cada una con subtítulo e icono.
+- Separadores visuales claros entre bloques para mejorar la jerarquía y la experiencia de usuario.
+- Inputs con icono a la izquierda, labels arriba y feedback de error accesible.
+- Medidor de fortaleza de contraseña y requisitos visuales alineados bajo el campo correspondiente.
+- Botón de registro destacado y microinteracciones en inputs y botones.
+- Responsive optimizado y accesibilidad mejorada (`aria-live` en feedback, navegación por teclado).
+- Código y estilos limpios, listos para futuras mejoras.
+
+#### Para continuar el desarrollo en otro equipo/PC:
+1. Haz pull de la rama `dev` para obtener los últimos cambios.
+2. Revisa el archivo `masterbikes/templates/usuarios/registro.html` para ver el nuevo diseño y estructura.
+3. Si necesitas modificar estilos, están embebidos en el bloque `{% block extra_css %}` del template.
+4. Prueba el registro en desktop y móvil para verificar la experiencia visual y de usuario.
+5. Si quieres personalizar colores, iconos o subtítulos de sección, edita el bloque de estilos y los títulos en el template.
+6. Mantén este archivo `NOTAS.md` actualizado con cualquier mejora o ajuste adicional.
 
 ## URLs Disponibles
 - http://127.0.0.1:8000/ - Página de inicio

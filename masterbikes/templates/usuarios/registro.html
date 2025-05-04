@@ -2,14 +2,281 @@
 
 {% block title %}Registro - MasterBikes{% endblock %}
 
+{% block extra_css %}
+<style>
+.register-bg {
+    background: linear-gradient(120deg, #f8fafc 0%, #e0e7ff 100%);
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+.register-bg::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: url('data:image/svg+xml;utf8,<svg width="100%25" height="100%25" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="2" fill="%234f46e522"/><circle cx="80" cy="80" r="1.5" fill="%234f46e522"/><circle cx="200" cy="60" r="1.5" fill="%234f46e522"/><circle cx="400" cy="100" r="2" fill="%234f46e522"/></svg>');
+    opacity: 0.10;
+    pointer-events: none;
+    z-index: 1;
+}
+.register-bg .svg-deco {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100px;
+    z-index: 2;
+    pointer-events: none;
+}
+.register-card {
+    background: #fff;
+    box-shadow: 0 16px 64px 0 rgba(79, 70, 229, 0.13), 0 2rem 4rem rgba(0,0,0,0.10);
+    border-radius: 1.2rem;
+    padding: 2.2rem 2.7rem 1.7rem 2.7rem;
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
+    max-width: 780px;
+    width: 100%;
+    position: relative;
+    overflow: visible;
+}
+@media (max-width: 991px) {
+    .register-card { padding: 1.2rem 0.5rem; max-width: 98vw; }
+}
+@media (max-width: 600px) {
+    .register-card { border-radius: 0.7rem; padding: 0.7rem 0.1rem; }
+}
+.brand-illustration {
+    width: 90px;
+    max-width: 22vw;
+    margin: 0 auto 0.2rem auto;
+    display: block;
+    animation: fadeInDown 1.2s cubic-bezier(.39,.575,.56,1) both;
+}
+@media (min-width: 992px) {
+    .brand-illustration { float: left; margin: 0 1.2rem 0.2rem 0; width: 110px; }
+    .register-card h2, .register-card .text-muted { text-align: left !important; }
+}
+@keyframes fadeInDown {
+    0% { opacity: 0; transform: translateY(-30px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+.register-card .watermark {
+    position: absolute;
+    bottom: 1.1rem; right: 1.5rem;
+    opacity: 0.08;
+    font-size: 2.5rem;
+    pointer-events: none;
+    z-index: 3;
+}
+.btn-register {
+    background: linear-gradient(90deg, #6366f1 0%, #4f46e5 100%);
+    color: #fff;
+    font-weight: 600;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 16px rgba(79, 70, 229, 0.13), 0 0 16px 2px #818cf8aa;
+    transition: all 0.3s cubic-bezier(.39,.575,.56,1), box-shadow 0.3s;
+    width: 100%;
+    padding: 0.7rem 0;
+    font-size: 1.13rem;
+    animation: pulse 2.5s infinite;
+    border-radius: 0.8rem;
+    position: relative;
+    overflow: hidden;
+}
+.btn-register:active {
+    animation: bounce 0.3s;
+}
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+    100% { transform: scale(1); }
+}
+@keyframes bounce {
+    0% { transform: scale(1); }
+    30% { transform: scale(0.97); }
+    60% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+.input-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.1rem;
+}
+.input-group-text {
+    background: #f3f4f6;
+    border: none;
+    color: #6366f1;
+    font-size: 1.13rem;
+    min-width: 2.2rem;
+    justify-content: center;
+    border-radius: 0.7rem 0 0 0.7rem;
+    border-right: 1px solid #e0e7ff;
+}
+.form-label {
+    font-weight: 500;
+    color: #444;
+    font-size: 1.01rem;
+    margin-bottom: 0.2rem;
+    pointer-events: none;
+    transition: color 0.2s;
+}
+.form-control {
+    border-radius: 0 0.7rem 0.7rem 0;
+    min-height: 2.1rem;
+    font-size: 1.01rem;
+    padding: 0.45rem 0.9rem;
+    border: 1.5px solid #e0e7ff;
+    border-left: none;
+    background: #fff;
+    box-shadow: 0 1px 4px #6366f10a;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.form-control:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 0.12rem #6366f133;
+}
+.divider {
+    border-top: 1.5px solid #e0e7ff;
+    margin: 1.2rem 0 1.1rem 0;
+    position: relative;
+    text-align: center;
+}
+.divider svg {
+    position: absolute;
+    left: 50%;
+    top: -13px;
+    transform: translateX(-50%);
+    z-index: 2;
+}
+.password-strength {
+    height: 5px;
+    border-radius: 4px;
+    margin-top: 0.15rem;
+    margin-bottom: 0.5rem;
+    background: #e0e7ff;
+    overflow: hidden;
+}
+.password-strength-bar {
+    height: 100%;
+    transition: width 0.4s;
+}
+.password-reqs {
+    font-size: 0.97rem;
+    margin-bottom: 0.7rem;
+    margin-top: 0.2rem;
+    color: #888;
+    list-style: none;
+    padding-left: 0.2rem;
+}
+.password-reqs li {
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+    margin-bottom: 0.2em;
+    transition: color 0.2s;
+}
+.password-reqs .met {
+    color: #22c55e;
+    font-weight: 600;
+}
+.show-password[aria-label]:hover::after {
+    content: attr(aria-label);
+    position: absolute;
+    right: 110%;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #6366f1;
+    color: #fff;
+    padding: 0.2em 0.7em;
+    border-radius: 0.5em;
+    font-size: 0.85em;
+    white-space: nowrap;
+    z-index: 10;
+    opacity: 0.95;
+}
+.login-link {
+    font-size: 0.97rem;
+    color: #6366f1;
+    opacity: 0.85;
+    margin-top: 0.7rem;
+}
+.login-link i { font-size: 1.1rem; }
+.login-link:hover { color: #4f46e5; opacity: 1; text-decoration: underline; }
+.invalid-feedback {
+    font-size: 0.97rem;
+    color: #e11d48;
+    display: flex;
+    align-items: center;
+    gap: 0.3em;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+.was-validated .form-control:invalid ~ .invalid-feedback,
+.form-control.is-invalid ~ .invalid-feedback {
+    opacity: 1;
+}
+.invalid-feedback:before {
+    content: '\f071';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    margin-right: 0.2em;
+    font-size: 1em;
+}
+.success-feedback {
+    font-size: 1.1rem;
+    color: #22c55e;
+    display: flex;
+    align-items: center;
+    gap: 0.3em;
+    margin-top: 1rem;
+    justify-content: center;
+    animation: fadeInUp 0.7s;
+}
+.success-feedback:before {
+    content: '\f058';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    margin-right: 0.2em;
+    font-size: 1.2em;
+}
+.section-title {
+    font-size: 1.08rem;
+    font-weight: 600;
+    color: #6366f1;
+    margin-top: 2.1rem;
+    margin-bottom: 0.7rem;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}
+.section-title:first-of-type {
+    margin-top: 0.5rem;
+}
+.section-divider {
+    border: none;
+    border-top: 2px solid #e0e7ff;
+    margin: 1.1rem 0 1.3rem 0;
+    width: 100%;
+}
+@media (max-width: 600px) {
+    .brand-illustration { width: 60px; }
+    .input-group-text { font-size: 1rem; }
+    .form-control { font-size: 1rem; }
+}
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-body">
-                    <h2 class="card-title text-center mb-4">Registro de Usuario</h2>
-                    
+<div class="register-bg d-flex align-items-center justify-content-center" style="min-height: 100vh;">
+    <svg class="svg-deco" viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,80 C360,120 1080,0 1440,80 L1440,0 L0,0 Z" fill="#6366f1" fill-opacity="0.07"/></svg>
+    <div class="container d-flex align-items-center justify-content-center">
+        <div class="row justify-content-center w-100">
+            <div class="col-12 d-flex justify-content-center">
+                <div class="register-card animate__animated animate__fadeInUp animate__faster">
+                    <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f6b4.svg" alt="Ilustración bicicleta" class="brand-illustration" loading="lazy"/>
+                    <span class="watermark"><i class="fas fa-biking"></i></span>
+                    <h2 class="mb-2 text-center">Registro de Usuario</h2>
+                    <div class="text-center text-muted mb-3">Crea tu cuenta y comienza a pedalear con nosotros 🚴‍♂️</div>
                     {% if messages %}
                         {% for message in messages %}
                             <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
@@ -18,58 +285,204 @@
                             </div>
                         {% endfor %}
                     {% endif %}
-
-                    <form method="post">
+                    <form method="post" class="needs-validation" novalidate autocomplete="off" aria-label="Formulario de registro" id="registerForm">
                         {% csrf_token %}
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
+                        <div class="section-title"><i class="fas fa-id-card"></i>Datos personales</div>
+                        <div class="row g-3">
+                            <div class="col-md-6">
                                 <label for="nombre" class="form-label">Nombre</label>
-                                <input type="text" class="form-control" id="nombre" name="nombre" required>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" required aria-label="Nombre">
+                                </div>
+                                <div class="invalid-feedback" aria-live="polite">Por favor ingresa tu nombre</div>
                             </div>
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6">
                                 <label for="apellido" class="form-label">Apellido</label>
-                                <input type="text" class="form-control" id="apellido" name="apellido" required>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                    <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Apellido" required aria-label="Apellido">
+                                </div>
+                                <div class="invalid-feedback" aria-live="polite">Por favor ingresa tu apellido</div>
                             </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="rut" class="form-label">RUT</label>
-                            <input type="text" class="form-control" id="rut" name="rut" required>
-                        </div>
-                        <div class="mb-3">
+                        <hr class="section-divider">
+                        <div class="section-title"><i class="fas fa-envelope"></i>Datos de acceso</div>
+                        <div class="mt-2">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" required>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Email" required aria-label="Email">
+                            </div>
+                            <div class="invalid-feedback" aria-live="polite">Por favor ingresa un email válido</div>
                         </div>
-                        <div class="mb-3">
-                            <label for="telefono" class="form-label">Teléfono</label>
-                            <input type="tel" class="form-control" id="telefono" name="telefono" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="direccion" class="form-label">Dirección</label>
-                            <input type="text" class="form-control" id="direccion" name="direccion" required>
-                        </div>
-                        <div class="mb-3">
+                        <div class="mt-2">
                             <label for="username" class="form-label">Nombre de Usuario</label>
-                            <input type="text" class="form-control" id="username" name="username" required>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
+                                <input type="text" class="form-control" id="username" name="username" placeholder="Nombre de Usuario" required aria-label="Nombre de Usuario">
+                            </div>
+                            <div class="invalid-feedback" aria-live="polite">Por favor ingresa un nombre de usuario</div>
                         </div>
-                        <div class="mb-3">
+                        <hr class="section-divider">
+                        <div class="section-title"><i class="fas fa-lock"></i>Seguridad</div>
+                        <div class="mt-2 position-relative">
                             <label for="password1" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" id="password1" name="password1" required>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                <input type="password" class="form-control" id="password1" name="password1" placeholder="Contraseña" required aria-label="Contraseña" autocomplete="new-password">
+                                <button type="button" tabindex="-1" class="btn btn-sm btn-link show-password" style="z-index:3;position:absolute;right:0.5rem;top:50%;transform:translateY(-50%);" aria-label="Mostrar u ocultar contraseña"><i class="fas fa-eye"></i></button>
+                            </div>
+                            <div class="password-strength mt-2"><div class="password-strength-bar" id="passwordStrengthBar" style="width:0%;background:#e0e7ff;"></div></div>
+                            <ul class="password-reqs" id="passwordReqs">
+                                <li id="req-length"><i class="fas fa-times"></i> 8 caracteres mínimo</li>
+                                <li id="req-mayus"><i class="fas fa-times"></i> 1 mayúscula</li>
+                                <li id="req-num"><i class="fas fa-times"></i> 1 número</li>
+                                <li id="req-symbol"><i class="fas fa-times"></i> 1 símbolo</li>
+                            </ul>
+                            <div class="invalid-feedback" aria-live="polite">Por favor ingresa una contraseña</div>
                         </div>
-                        <div class="mb-3">
+                        <div class="mt-2 position-relative">
                             <label for="password2" class="form-label">Confirmar Contraseña</label>
-                            <input type="password" class="form-control" id="password2" name="password2" required>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                <input type="password" class="form-control" id="password2" name="password2" placeholder="Confirmar Contraseña" required aria-label="Confirmar Contraseña" autocomplete="new-password">
+                                <button type="button" tabindex="-1" class="btn btn-sm btn-link show-password" style="z-index:3;position:absolute;right:0.5rem;top:50%;transform:translateY(-50%);" aria-label="Mostrar u ocultar contraseña"><i class="fas fa-eye"></i></button>
+                            </div>
+                            <div class="invalid-feedback" aria-live="polite">Por favor confirma tu contraseña</div>
                         </div>
-                        <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-primary">Registrarse</button>
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-register btn-lg" aria-label="Registrarse">
+                                <i class="fas fa-user-plus me-2"></i>Registrarse
+                            </button>
                         </div>
+                        <div id="successFeedback" class="success-feedback" style="display:none;"></div>
                     </form>
-
-                    <div class="text-center mt-3">
-                        <p>¿Ya tienes una cuenta? <a href="{% url 'usuarios:login' %}">Inicia sesión aquí</a></p>
+                    <div class="text-center login-link mt-2">
+                        ¿Ya tienes una cuenta? <a href="{% url 'usuarios:login' %}"><i class="fas fa-sign-in-alt me-1"></i>Inicia sesión aquí</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Mostrar/ocultar contraseña con animación
+const showPasswordBtns = document.querySelectorAll('.show-password');
+showPasswordBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+        const input = this.parentElement.querySelector('input');
+        if (input.type === 'password') {
+            input.type = 'text';
+            this.querySelector('i').classList.remove('fa-eye');
+            this.querySelector('i').classList.add('fa-eye-slash');
+            this.setAttribute('aria-label', 'Ocultar contraseña');
+        } else {
+            input.type = 'password';
+            this.querySelector('i').classList.remove('fa-eye-slash');
+            this.querySelector('i').classList.add('fa-eye');
+            this.setAttribute('aria-label', 'Mostrar contraseña');
+        }
+    });
+});
+// Medidor de fortaleza de contraseña y requisitos
+const password1 = document.getElementById('password1');
+const strengthBar = document.getElementById('passwordStrengthBar');
+const reqs = {
+    length: document.getElementById('req-length'),
+    mayus: document.getElementById('req-mayus'),
+    num: document.getElementById('req-num'),
+    symbol: document.getElementById('req-symbol')
+};
+password1.addEventListener('input', function() {
+    const val = password1.value;
+    let score = 0;
+    // Requisitos
+    const metLength = val.length >= 8;
+    const metMayus = /[A-Z]/.test(val);
+    const metNum = /[0-9]/.test(val);
+    const metSymbol = /[^A-Za-z0-9]/.test(val);
+    reqs.length.classList.toggle('met', metLength);
+    reqs.length.querySelector('i').className = metLength ? 'fas fa-check' : 'fas fa-times';
+    reqs.mayus.classList.toggle('met', metMayus);
+    reqs.mayus.querySelector('i').className = metMayus ? 'fas fa-check' : 'fas fa-times';
+    reqs.num.classList.toggle('met', metNum);
+    reqs.num.querySelector('i').className = metNum ? 'fas fa-check' : 'fas fa-times';
+    reqs.symbol.classList.toggle('met', metSymbol);
+    reqs.symbol.querySelector('i').className = metSymbol ? 'fas fa-check' : 'fas fa-times';
+    score = [metLength, metMayus, metNum, metSymbol].filter(Boolean).length;
+    let width = [0, 25, 50, 75, 100][score];
+    let color = ['#e0e7ff', '#fbbf24', '#f59e42', '#34d399', '#22c55e'][score];
+    strengthBar.style.width = width + '%';
+    strengthBar.style.background = color;
+});
+// Validación en tiempo real para todos los campos
+function validateField(input, testFn, msg) {
+    const feedback = input.parentElement.parentElement.querySelector('.invalid-feedback');
+    if (testFn(input.value)) {
+        input.classList.remove('is-invalid');
+        feedback.style.display = 'none';
+    } else {
+        input.classList.add('is-invalid');
+        feedback.style.display = 'block';
+        if (msg) feedback.textContent = msg;
+    }
+}
+const emailInput = document.getElementById('email');
+emailInput.addEventListener('input', function() {
+    validateField(emailInput, v => /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v));
+});
+const nombreInput = document.getElementById('nombre');
+nombreInput.addEventListener('input', function() {
+    validateField(nombreInput, v => v.trim().length > 0);
+});
+const apellidoInput = document.getElementById('apellido');
+apellidoInput.addEventListener('input', function() {
+    validateField(apellidoInput, v => v.trim().length > 0);
+});
+const usernameInput = document.getElementById('username');
+usernameInput.addEventListener('input', function() {
+    validateField(usernameInput, v => v.trim().length > 0);
+});
+const password2 = document.getElementById('password2');
+password2.addEventListener('input', function() {
+    validateField(password2, v => v.trim().length > 0);
+});
+// Validación de coincidencia de contraseñas en tiempo real
+password2.addEventListener('input', function() {
+    const feedback = password2.parentElement.parentElement.querySelector('.invalid-feedback');
+    if (password2.value !== password1.value) {
+        password2.classList.add('is-invalid');
+        feedback.style.display = 'block';
+        feedback.textContent = 'Las contraseñas no coinciden';
+    } else {
+        password2.classList.remove('is-invalid');
+        feedback.style.display = 'none';
+    }
+});
+// Validación de formulario y feedback de éxito
+(function () {
+    'use strict'
+    var forms = document.querySelectorAll('.needs-validation')
+    Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity() || password2.value !== password1.value) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                } else {
+                    // Feedback de éxito animado
+                    event.preventDefault();
+                    document.getElementById('successFeedback').textContent = '¡Registro exitoso! Bienvenido a MasterBikes 🚴‍♂️';
+                    document.getElementById('successFeedback').style.display = 'flex';
+                    setTimeout(() => { form.submit(); }, 1200);
+                }
+                form.classList.add('was-validated');
+            }, false)
+        })
+})();
+</script>
 {% endblock %} 
