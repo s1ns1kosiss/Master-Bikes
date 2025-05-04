@@ -7,6 +7,7 @@ Plataforma web para gestión integral de arriendo, venta y reparación de bicicl
 - Python 3.8 o superior
 - pip (gestor de paquetes de Python)
 - Git
+- Node.js y npm (para archivos estáticos)
 - PostgreSQL (opcional, para producción)
 
 ## Instalación
@@ -28,12 +29,17 @@ Plataforma web para gestión integral de arriendo, venta y reparación de bicicl
    source venv/bin/activate
    ```
 
-3. **Instalar dependencias**
+3. **Instalar dependencias de Python**
    ```bash
    pip install -r requirements.txt
    ```
 
-4. **Configurar base de datos**
+4. **Instalar dependencias de Node.js**
+   ```bash
+   npm install
+   ```
+
+5. **Configurar base de datos**
    - Para desarrollo (SQLite):
      - No se requiere configuración adicional
      - La base de datos se creará automáticamente
@@ -43,17 +49,17 @@ Plataforma web para gestión integral de arriendo, venta y reparación de bicicl
      - Crear base de datos
      - Configurar variables de entorno o modificar settings.py
 
-5. **Aplicar migraciones**
+6. **Aplicar migraciones**
    ```bash
    python manage.py migrate
    ```
 
-6. **Crear superusuario**
+7. **Crear superusuario**
    ```bash
    python manage.py createsuperuser
    ```
 
-7. **Iniciar servidor de desarrollo**
+8. **Iniciar servidor de desarrollo**
    ```bash
    python manage.py runserver
    ```
@@ -69,15 +75,23 @@ masterbikes/
 ├── despachos/         # Gestión de entregas
 ├── promociones/       # Sistema de promociones
 ├── reportes/          # Generación de reportes
-└── templates/         # Plantillas HTML
+├── templates/         # Plantillas HTML
+├── static/           # Archivos estáticos (CSS, JS, imágenes)
+└── media/            # Archivos subidos por usuarios
 ```
 
 ## Dependencias Principales
 
+### Backend
 - Django 5.2
 - Pillow (para manejo de imágenes)
 - django-widget-tweaks (para formularios)
 - psycopg2-binary (para PostgreSQL)
+
+### Frontend
+- Bootstrap 5
+- Font Awesome
+- jQuery (incluido con Bootstrap)
 
 ## Desarrollo
 
@@ -125,6 +139,7 @@ masterbikes/
 - Revisar NOTAS.md para más detalles sobre el proyecto
 - Seguir las convenciones de commit establecidas
 - Mantener la documentación actualizada
+- Asegurarse de que los archivos estáticos estén compilados antes de hacer commit
 
 ## Soporte
 
