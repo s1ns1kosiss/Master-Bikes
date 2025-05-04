@@ -5,22 +5,86 @@
 
 {% block extra_css %}
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;500&display=swap');
+
+:root {
+    --primary: #4f46e5;
+    --secondary: #6366f1;
+    --background: #f8fafc;
+    --card-bg: rgba(255,255,255,0.97);
+    --shadow: 0 12px 48px 0 rgba(79, 70, 229, 0.18), 0 1.5rem 3rem rgba(0,0,0,0.10);
+    --input-border: #e2e8f0;
+    --input-focus: #4f46e5;
+    --danger: #e11d48;
+    --dark-bg: #18181b;
+    --dark-card: rgba(36,37,46,0.98);
+    --dark-text: #f3f4f6;
+}
+
+body.dark-mode {
+    background: var(--dark-bg) !important;
+}
+body.dark-mode .login-container {
+    background: linear-gradient(135deg, #232946 0%, #18181b 100%) !important;
+}
+body.dark-mode .login-card {
+    background: var(--dark-card) !important;
+    color: var(--dark-text);
+    box-shadow: 0 12px 48px 0 rgba(36,37,46,0.28), 0 1.5rem 3rem rgba(0,0,0,0.20);
+}
+body.dark-mode .form-control {
+    background: #232946;
+    color: #f3f4f6;
+    border-color: #6366f1;
+}
+body.dark-mode .form-control:focus {
+    border-color: #a5b4fc;
+    box-shadow: 0 0 0 0.25rem rgba(99,102,241,0.15);
+}
+body.dark-mode .btn-login {
+    background: linear-gradient(90deg, #6366f1 0%, #4f46e5 100%);
+}
+body.dark-mode .register-link, body.dark-mode .forgot-link {
+    color: #a5b4fc;
+}
+body.dark-mode .register-link:hover, body.dark-mode .forgot-link:hover {
+    color: #818cf8;
+}
+
 .login-container {
-    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    background: linear-gradient(270deg, #6366f1, #4f46e5, #6366f1);
+    background-size: 400% 400%;
     min-height: 100vh;
     position: relative;
     overflow: hidden;
+    transition: background 0.5s;
+    animation: gradientBG 12s ease infinite;
+}
+@keyframes gradientBG {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
 }
 
 .login-card {
-    background: rgba(255, 255, 255, 0.97);
+    background: var(--card-bg);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 12px 48px 0 rgba(79, 70, 229, 0.18), 0 1.5rem 3rem rgba(0,0,0,0.10);
+    box-shadow: var(--shadow);
     border-radius: 2rem;
     animation: fadeInUp 1s cubic-bezier(.39,.575,.56,1) both;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Roboto', sans-serif;
 }
-
+.login-card .inner-shadow {
+    position: absolute;
+    inset: 0;
+    border-radius: 2rem;
+    box-shadow: inset 0 0 40px 0 rgba(79, 70, 229, 0.10);
+    pointer-events: none;
+    z-index: 2;
+}
 @keyframes fadeInUp {
     0% { opacity: 0; transform: translateY(40px); }
     100% { opacity: 1; transform: translateY(0); }
@@ -28,17 +92,15 @@
 
 .brand-logo {
     font-size: 3.5rem;
-    color: #4f46e5;
+    color: var(--primary);
     margin-bottom: 0.5rem;
     animation: pulse 2s infinite;
 }
-
 @keyframes pulse {
     0% { transform: scale(1); }
     50% { transform: scale(1.08); }
     100% { transform: scale(1); }
 }
-
 .brand-title {
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
@@ -47,18 +109,36 @@
     letter-spacing: 1px;
 }
 .slogan {
-    font-size: 1rem;
-    color: #6366f1;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.1rem;
+    color: var(--secondary);
     margin-bottom: 1.5rem;
 }
 
 .form-control {
-    border: 2px solid #e2e8f0;
+    border: 2px solid var(--input-border);
     transition: all 0.3s ease;
+    box-shadow: none;
+    outline: none;
+    position: relative;
+    z-index: 1;
 }
 .form-control:focus {
-    border-color: #4f46e5;
-    box-shadow: 0 0 0 0.25rem rgba(79, 70, 229, 0.1);
+    border-color: var(--input-focus);
+    box-shadow: 0 0 0 0.25rem rgba(79, 70, 229, 0.13);
+}
+.form-control:focus-visible {
+    outline: none;
+}
+.form-control.animated-border {
+    border-image: linear-gradient(90deg, #6366f1, #4f46e5, #6366f1) 1;
+    border-width: 2px;
+    animation: borderAnim 2s linear infinite;
+}
+@keyframes borderAnim {
+    0% { border-image-slice: 1 0 0 0; }
+    50% { border-image-slice: 0 1 0 0; }
+    100% { border-image-slice: 1 0 0 0; }
 }
 
 .btn-login {
@@ -70,6 +150,27 @@
     box-shadow: 0 4px 16px rgba(79, 70, 229, 0.13);
     position: relative;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.btn-login .spinner-border {
+    width: 1.2rem;
+    height: 1.2rem;
+    margin-right: 0.5rem;
+    display: none;
+}
+.btn-login.loading .spinner-border {
+    display: inline-block;
+}
+.btn-login .bike-anim {
+    display: inline-block;
+    animation: bikeMove 1.2s linear infinite;
+}
+@keyframes bikeMove {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(8px); }
+    100% { transform: translateX(0); }
 }
 .btn-login:after {
     content: '';
@@ -91,26 +192,26 @@
 }
 
 .register-link {
-    color: #4f46e5;
+    color: var(--primary);
     transition: all 0.3s ease;
     font-weight: 500;
     display: inline-flex;
     align-items: center;
 }
 .register-link:hover {
-    color: #6366f1;
+    color: var(--secondary);
     transform: translateY(-2px) scale(1.05);
     text-decoration: underline;
 }
 
 .forgot-link {
-    color: #6366f1;
+    color: var(--secondary);
     font-size: 0.95rem;
     text-decoration: none;
     transition: color 0.2s;
 }
 .forgot-link:hover {
-    color: #4f46e5;
+    color: var(--primary);
     text-decoration: underline;
 }
 
@@ -127,6 +228,8 @@
     background: rgba(255, 255, 255, 0.13);
     border-radius: 50%;
     animation: float 15s infinite;
+    opacity: 0.7;
+    transition: opacity 0.8s;
 }
 .shape.bike {
     background: none;
@@ -158,9 +261,9 @@
     animation-delay: 4s;
 }
 @keyframes float {
-    0% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-20px) rotate(180deg); }
-    100% { transform: translateY(0) rotate(360deg); }
+    0% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
+    50% { transform: translateY(-20px) rotate(180deg); opacity: 1; }
+    100% { transform: translateY(0) rotate(360deg); opacity: 0.7; }
 }
 
 @media (max-width: 768px) {
@@ -168,11 +271,35 @@
     .brand-logo { font-size: 2.2rem; }
     .brand-title { font-size: 1.3rem; }
 }
+
+.toggle-darkmode {
+    position: absolute;
+    top: 1.5rem;
+    right: 2rem;
+    z-index: 10;
+    background: rgba(255,255,255,0.7);
+    border: none;
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.toggle-darkmode:hover {
+    background: #e0e7ff;
+}
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="login-container position-relative">
+    <button class="toggle-darkmode" id="toggleDarkMode" aria-label="Cambiar modo oscuro/claro">
+        <i class="fas fa-moon"></i>
+    </button>
     <div class="floating-shapes">
         <div class="shape"></div>
         <div class="shape"></div>
@@ -182,7 +309,8 @@
     <div class="container min-vh-100 d-flex align-items-center justify-content-center py-5">
         <div class="row justify-content-center w-100">
             <div class="col-md-8 col-lg-6">
-                <div class="login-card card rounded-4 overflow-hidden">
+                <div class="login-card card rounded-4 overflow-hidden" id="loginCard">
+                    <div class="inner-shadow"></div>
                     <div class="text-center pt-5">
                         <div class="brand-logo">
                             <i class="fas fa-bicycle" aria-hidden="true"></i>
@@ -193,14 +321,14 @@
                     <div class="card-body p-4 p-sm-5">
                         {% if messages %}
                             {% for message in messages %}
-                                <div class="alert alert-{{ message.tags }} alert-dismissible fade show d-flex align-items-center" role="alert">
+                                <div class="alert alert-{{ message.tags }} alert-dismissible fade show d-flex align-items-center" role="alert" id="loginError">
                                     <i class="fas fa-exclamation-triangle me-2"></i>
                                     <div>{{ message }}</div>
                                     <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Cerrar"></button>
                                 </div>
                             {% endfor %}
                         {% endif %}
-                        <form method="post" class="needs-validation" novalidate aria-label="Formulario de inicio de sesión">
+                        <form method="post" class="needs-validation" novalidate aria-label="Formulario de inicio de sesión" id="loginForm">
                             {% csrf_token %}
                             <div class="form-floating mb-4">
                                 <input type="text" class="form-control rounded-3" id="username" name="username" placeholder="Usuario" required aria-label="Usuario">
@@ -224,8 +352,10 @@
                                 <a href="#" class="forgot-link">¿Olvidaste tu contraseña?</a>
                             </div>
                             <div class="d-grid gap-2 mb-4">
-                                <button type="submit" class="btn btn-login btn-lg text-white rounded-3" aria-label="Iniciar sesión">
-                                    <i class="fas fa-sign-in-alt me-2"></i>Iniciar Sesión
+                                <button type="submit" class="btn btn-login btn-lg text-white rounded-3" aria-label="Iniciar sesión" id="loginBtn">
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    <span class="bike-anim"><i class="fas fa-bicycle"></i></span>
+                                    <span class="login-text"><i class="fas fa-sign-in-alt me-2"></i>Iniciar Sesión</span>
                                 </button>
                             </div>
                         </form>
@@ -245,20 +375,62 @@
 
 {% block extra_js %}
 <script>
-// Validación de formulario
+// Modo oscuro toggle
+const toggleBtn = document.getElementById('toggleDarkMode');
+toggleBtn.addEventListener('click', function() {
+    document.body.classList.toggle('dark-mode');
+    this.querySelector('i').classList.toggle('fa-moon');
+    this.querySelector('i').classList.toggle('fa-sun');
+});
+
+// Validación de formulario y microinteracciones
 (function () {
     'use strict'
     var forms = document.querySelectorAll('.needs-validation')
     Array.prototype.slice.call(forms)
         .forEach(function (form) {
             form.addEventListener('submit', function (event) {
+                var btn = document.getElementById('loginBtn');
+                var spinner = btn.querySelector('.spinner-border');
+                var bike = btn.querySelector('.bike-anim');
+                var text = btn.querySelector('.login-text');
                 if (!form.checkValidity()) {
-                    event.preventDefault()
-                    event.stopPropagation()
+                    event.preventDefault();
+                    event.stopPropagation();
+                } else {
+                    // Spinner y animación en botón
+                    btn.classList.add('loading');
+                    spinner.style.display = 'inline-block';
+                    bike.style.display = 'none';
+                    text.style.opacity = '0.5';
                 }
-                form.classList.add('was-validated')
+                form.classList.add('was-validated');
             }, false)
         })
-})()
+})();
+
+// Shake si hay error
+window.addEventListener('DOMContentLoaded', function() {
+    var error = document.getElementById('loginError');
+    var card = document.getElementById('loginCard');
+    if(error && card) {
+        card.classList.add('animate__animated', 'animate__shakeX');
+        setTimeout(() => {
+            card.classList.remove('animate__animated', 'animate__shakeX');
+        }, 1200);
+    }
+});
+
+// Borde animado en input activo
+const inputs = document.querySelectorAll('.form-control');
+inputs.forEach(input => {
+    input.addEventListener('focus', function() {
+        this.classList.add('animated-border');
+    });
+    input.addEventListener('blur', function() {
+        this.classList.remove('animated-border');
+    });
+});
 </script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 {% endblock %} 
