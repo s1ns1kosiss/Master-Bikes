@@ -3,67 +3,47 @@
 {% block title %}Inicio - MasterBikes{% endblock %}
 
 {% block content %}
-<!-- Hero Section -->
-<section class="bg-primary text-white py-5 rounded-3 mb-5">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-md-6">
-                <h1 class="display-4 fw-bold mb-4">Tu destino para todo en bicicletas</h1>
-                <p class="lead mb-4">Arriendos, ventas y reparaciones de calidad para tu bicicleta. ¡Encuentra todo lo que necesitas en un solo lugar!</p>
-                <div class="d-grid gap-2 d-md-flex">
-                    <a href="{% url 'productos:lista' %}" class="btn btn-light btn-lg px-4 me-md-2">Ver Productos</a>
-                    <a href="{% url 'arriendos:lista' %}" class="btn btn-outline-light btn-lg px-4">Arrendar</a>
-                </div>
-            </div>
-            <div class="col-md-6 text-center">
-                <i class="fas fa-bicycle fa-10x"></i>
-            </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center mb-5">
+            <h1 class="display-4">Bienvenido a MasterBikes</h1>
+            <p class="lead">Tu destino para el alquiler y reparación de bicicletas</p>
         </div>
     </div>
-</section>
 
-<!-- Features Section -->
-<section class="mb-5">
-    <div class="container">
-        <h2 class="text-center mb-4">Nuestros Servicios</h2>
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="card h-100">
-                    <div class="card-body text-center">
-                        <i class="fas fa-shopping-cart fa-3x text-primary mb-3"></i>
-                        <h3 class="card-title h5">Venta de Bicicletas</h3>
-                        <p class="card-text">Amplia selección de bicicletas nuevas y usadas, además de accesorios de calidad.</p>
-                    </div>
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-bicycle fa-3x mb-3 text-primary"></i>
+                    <h5 class="card-title">Alquiler de Bicicletas</h5>
+                    <p class="card-text">Explora nuestra amplia selección de bicicletas disponibles para alquilar.</p>
+                    <a href="{% url 'productos:lista' %}" class="btn btn-primary">Ver Bicicletas</a>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card h-100">
-                    <div class="card-body text-center">
-                        <i class="fas fa-clock fa-3x text-primary mb-3"></i>
-                        <h3 class="card-title h5">Arriendo</h3>
-                        <p class="card-text">Arrienda bicicletas por horas, días o semanas. Perfecto para paseos y aventuras.</p>
-                    </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-tools fa-3x mb-3 text-primary"></i>
+                    <h5 class="card-title">Servicio de Reparación</h5>
+                    <p class="card-text">Mantenimiento y reparación profesional para tu bicicleta.</p>
+                    <a href="{% url 'reparaciones:lista' %}" class="btn btn-primary">Solicitar Reparación</a>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card h-100">
-                    <div class="card-body text-center">
-                        <i class="fas fa-tools fa-3x text-primary mb-3"></i>
-                        <h3 class="card-title h5">Reparaciones</h3>
-                        <p class="card-text">Servicio técnico profesional para todo tipo de bicicletas y mantenimiento.</p>
-                    </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-user-plus fa-3x mb-3 text-primary"></i>
+                    <h5 class="card-title">Únete a Nosotros</h5>
+                    <p class="card-text">Regístrate para acceder a todos nuestros servicios y beneficios.</p>
+                    <a href="{% url 'usuarios:registro' %}" class="btn btn-primary">Registrarse</a>
                 </div>
             </div>
         </div>
     </div>
-</section>
-
-<!-- Call to Action -->
-<section class="bg-light py-5 rounded-3">
-    <div class="container text-center">
-        <h2 class="mb-4">¿Necesitas ayuda con tu bicicleta?</h2>
-        <p class="lead mb-4">Nuestro equipo de expertos está listo para ayudarte con cualquier servicio que necesites.</p>
-        <a href="{% url 'reparaciones:lista' %}" class="btn btn-primary btn-lg">Solicitar Servicio</a>
-    </div>
-</section>
+</div>
 {% endblock %} 

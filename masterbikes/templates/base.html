@@ -41,12 +41,12 @@
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li><a class="dropdown-item" href="{% url 'usuarios:perfil' %}">Mi Perfil</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar Sesión</a></li>
+                                <li><a class="dropdown-item" href="{% url 'usuarios:logout' %}">Cerrar Sesión</a></li>
                             </ul>
                         </li>
                     {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'login' %}">Iniciar Sesión</a>
+                            <a class="nav-link" href="{% url 'usuarios:login' %}">Iniciar Sesión</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'usuarios:registro' %}">Registrarse</a>
