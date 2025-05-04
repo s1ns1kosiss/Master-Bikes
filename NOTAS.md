@@ -33,74 +33,87 @@ Plataforma web para gestión integral de arriendo, venta y reparación de bicicl
 - usuario, producto, tecnico, descripcion_problema, estado, fecha_solicitud, fecha_inicio, fecha_fin, costo, observaciones
 
 ## Avances Realizados
-### Estructura Base y Templates
-- Implementación de base.html con navbar responsive y footer
-- Creación de home.html con secciones principales
-- Configuración de vistas y URLs principales
-- Integración de Bootstrap 5 y Font Awesome
+### Sistema de Autenticación
+- Implementado sistema completo de login y registro
+- Templates creados para login y registro
+- Configuración de URLs y vistas para autenticación
+- Redirecciones configuradas en settings.py
+- Implementación de mensajes de error y éxito
 
-### Sistema de Usuarios
+### Gestión de Usuarios
+- Implementado sistema de permisos
+- Creados templates específicos para clientes:
+  - Perfil de cliente
+  - Arriendos del cliente
+  - Reparaciones del cliente
+- Agregados comandos de gestión de usuarios para desarrollo
 - Implementación de formularios de registro y edición
 - Creación de vistas para perfil y edición de usuario
-- Configuración de URLs para gestión de usuarios
-- Integración de django-widget-tweaks para mejor presentación de formularios
 
-### Configuración del Proyecto
-- Actualización de settings.py con apps y configuraciones
-- Configuración de URLs principales
-- Actualización de requirements.txt con nuevas dependencias
-- Configuración de archivos estáticos y media
-- Cambio temporal a SQLite para desarrollo local
+### Productos
+- Templates creados:
+  - Lista de productos
+  - Detalle de producto
+  - Formulario de producto
+- Implementada lógica de visualización y gestión
+- Integración con sistema de imágenes
 
-### Migraciones y Modelos
-- Creación de migraciones iniciales para todas las apps
-- Implementación de modelos para Usuario, Producto, Arriendo y Reparación
-- Configuración de relaciones entre modelos
-- Registro de modelos en el admin de Django
+### Arriendos
+- Templates creados:
+  - Lista de arriendos
+  - Detalle de arriendo
+  - Formulario de arriendo
+- Formulario implementado con validaciones:
+  - Validación de fechas
+  - Filtrado de productos disponibles
+- Lógica de negocio para arriendos
+- Sistema de estados y seguimiento
 
-### URLs y Vistas
-- Configuración de URLs para arriendos, productos y reparaciones
-- Implementación de vistas básicas para cada módulo
-- Estructuración de rutas siguiendo las mejores prácticas
+### Reparaciones
+- Templates creados:
+  - Lista de reparaciones
+  - Detalle de reparación
+  - Formulario de reparación
+- Formularios implementados:
+  - Formulario para clientes
+  - Formulario para staff con campos adicionales
+- Lógica de negocio para reparaciones
+- Sistema de asignación de técnicos
+
+### Plantillas Base
+- Actualizada la plantilla base con navegación
+- Mejorada la página de inicio
+- Implementado sistema de mensajes
+- Integración de Bootstrap 5 y Font Awesome
+- Diseño responsive
+
+### URLs Disponibles
+- http://127.0.0.1:8000/ - Página de inicio
+- http://127.0.0.1:8000/usuarios/login/ - Iniciar sesión
+- http://127.0.0.1:8000/usuarios/registro/ - Registrarse
+- http://127.0.0.1:8000/productos/ - Lista de productos
+- http://127.0.0.1:8000/arriendos/ - Lista de arriendos
+- http://127.0.0.1:8000/reparaciones/ - Lista de reparaciones
+
+## Configuración del Entorno
+1. Clonar el repositorio
+2. Crear entorno virtual: `python -m venv venv`
+3. Activar entorno virtual:
+   - Windows: `venv\Scripts\activate`
+   - Linux/Mac: `source venv/bin/activate`
+4. Instalar dependencias: `pip install -r requirements.txt`
+5. Aplicar migraciones: `python manage.py migrate`
+6. Crear superusuario: `python manage.py createsuperuser`
+7. Crear usuarios de prueba: `python manage.py create_test_users`
+8. Ejecutar servidor: `python manage.py runserver`
 
 ## Pendientes y Próximos Pasos
-- Implementar formularios para productos
-- Desarrollar lógica de negocio para arriendos
-- Crear sistema de seguimiento de reparaciones
-- Configurar permisos específicos por roles
-- Implementar sistema de despachos
-- Desarrollar sistema de promociones
-- Crear módulo de reportes
+- Implementar sistema de promociones
+- Desarrollar sistema de despachos
+- Agregar reportes y estadísticas
+- Mejorar la interfaz de usuario
+- Implementar sistema de pagos
 - Migrar a PostgreSQL en producción
-
-## Plan de Trabajo en Computador de Casa
-### Configuración de PostgreSQL
-1. Clonar repositorio
-2. Instalar dependencias del proyecto
-3. Configurar PostgreSQL:
-   - Crear base de datos
-   - Configurar usuario y permisos
-   - Actualizar settings.py con credenciales de PostgreSQL
-4. Migrar datos de SQLite a PostgreSQL:
-   - Crear script de migración
-   - Verificar integridad de datos
-   - Probar funcionalidades con nueva base de datos
-
-### Desarrollo con PostgreSQL
-1. Implementar formularios para productos
-2. Desarrollar lógica de negocio para arriendos
-3. Crear sistema de seguimiento de reparaciones
-4. Configurar permisos específicos por roles
-5. Implementar sistema de despachos
-6. Desarrollar sistema de promociones
-7. Crear módulo de reportes
-
-### Pruebas y Optimización
-1. Realizar pruebas de rendimiento
-2. Optimizar consultas a la base de datos
-3. Implementar índices necesarios
-4. Configurar respaldos automáticos
-5. Documentar procedimientos de mantenimiento
 
 ## Tips para desarrollo colaborativo
 - Subir cambios frecuentemente a la rama `dev`
@@ -110,4 +123,89 @@ Plataforma web para gestión integral de arriendo, venta y reparación de bicicl
 
 ---
 
-*Actualizado: 19/03/2024 - Implementación de migraciones y configuración de URLs y vistas* 
+*Actualizado: 19/03/2024 - Implementación de sistema de autenticación, gestión de usuarios, productos, arriendos y reparaciones*
+
+# Notas de Desarrollo - MasterBikes
+
+## Últimos Cambios Realizados
+
+### Sistema de Autenticación
+- Implementado sistema completo de login y registro
+- Templates creados para login y registro
+- Configuración de URLs y vistas para autenticación
+- Redirecciones configuradas en settings.py
+
+### Gestión de Usuarios
+- Implementado sistema de permisos
+- Creados templates específicos para clientes:
+  - Perfil de cliente
+  - Arriendos del cliente
+  - Reparaciones del cliente
+- Agregados comandos de gestión de usuarios para desarrollo
+
+### Productos
+- Templates creados:
+  - Lista de productos
+  - Detalle de producto
+  - Formulario de producto
+- Implementada lógica de visualización y gestión
+
+### Arriendos
+- Templates creados:
+  - Lista de arriendos
+  - Detalle de arriendo
+  - Formulario de arriendo
+- Formulario implementado con validaciones
+- Lógica de negocio para arriendos
+
+### Reparaciones
+- Templates creados:
+  - Lista de reparaciones
+  - Detalle de reparación
+  - Formulario de reparación
+- Formularios implementados:
+  - Formulario para clientes
+  - Formulario para staff con campos adicionales
+- Lógica de negocio para reparaciones
+
+### Plantillas Base
+- Actualizada la plantilla base con navegación
+- Mejorada la página de inicio
+- Implementado sistema de mensajes
+
+### Mejoras visuales y refactor de estructura (Abril 2025)
+- Unificación y modernización del footer y navbar en `base.html` para lograr una navegación y pie de página consistentes en todo el sitio.
+- Eliminación de footers y navbars duplicados en las plantillas, asegurando limpieza y claridad en la estructura.
+- Footer moderno, con enlaces sociales y tagline, presente en todas las páginas.
+- Rediseño visual del hero en la página de inicio: altura y padding optimizados, degradado más suave, texto principal y subtítulo con tamaño equilibrado, y SVG decorativo mejor posicionado.
+- Agregada flecha animada de scroll en el hero para invitar a explorar el contenido.
+- Transición visual más fluida entre el hero y las tarjetas principales.
+- Mejoras de responsividad y adaptación a dispositivos móviles en el hero y elementos principales.
+- Separación de commits por tipo de cambio (estructura global vs. mejoras visuales) y mensajes de commit descriptivos para facilitar el seguimiento del historial.
+
+## URLs Disponibles
+- http://127.0.0.1:8000/ - Página de inicio
+- http://127.0.0.1:8000/usuarios/login/ - Iniciar sesión
+- http://127.0.0.1:8000/usuarios/registro/ - Registrarse
+- http://127.0.0.1:8000/productos/ - Lista de productos
+- http://127.0.0.1:8000/arriendos/ - Lista de arriendos
+- http://127.0.0.1:8000/reparaciones/ - Lista de reparaciones
+
+## Configuración del Entorno
+1. Clonar el repositorio
+2. Crear entorno virtual: `python -m venv venv`
+3. Activar entorno virtual:
+   - Windows: `venv\Scripts\activate`
+   - Linux/Mac: `source venv/bin/activate`
+4. Instalar dependencias: `pip install -r requirements.txt`
+5. Aplicar migraciones: `python manage.py migrate`
+6. Crear superusuario: `python manage.py createsuperuser`
+7. Crear usuarios de prueba: `python manage.py create_test_users`
+8. Ejecutar servidor: `python manage.py runserver`
+
+## Próximos Pasos
+- Implementar sistema de promociones
+- Desarrollar sistema de despachos
+- Agregar reportes y estadísticas
+- Mejorar la interfaz de usuario
+- Implementar sistema de pagos 
