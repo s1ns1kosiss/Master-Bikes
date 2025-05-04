@@ -1,45 +1,264 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Iniciar Sesión - MasterBikes{% endblock %}
 
+{% block extra_css %}
+<style>
+.login-container {
+    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+.login-card {
+    background: rgba(255, 255, 255, 0.97);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 12px 48px 0 rgba(79, 70, 229, 0.18), 0 1.5rem 3rem rgba(0,0,0,0.10);
+    border-radius: 2rem;
+    animation: fadeInUp 1s cubic-bezier(.39,.575,.56,1) both;
+}
+
+@keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(40px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+.brand-logo {
+    font-size: 3.5rem;
+    color: #4f46e5;
+    margin-bottom: 0.5rem;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+    100% { transform: scale(1); }
+}
+
+.brand-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 2.1rem;
+    color: #22223b;
+    letter-spacing: 1px;
+}
+.slogan {
+    font-size: 1rem;
+    color: #6366f1;
+    margin-bottom: 1.5rem;
+}
+
+.form-control {
+    border: 2px solid #e2e8f0;
+    transition: all 0.3s ease;
+}
+.form-control:focus {
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 0.25rem rgba(79, 70, 229, 0.1);
+}
+
+.btn-login {
+    background: linear-gradient(90deg, #4f46e5 0%, #6366f1 100%);
+    border: none;
+    transition: all 0.3s cubic-bezier(.39,.575,.56,1);
+    font-weight: 600;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 16px rgba(79, 70, 229, 0.13);
+    position: relative;
+    overflow: hidden;
+}
+.btn-login:after {
+    content: '';
+    position: absolute;
+    left: -75%;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(120deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 100%);
+    transform: skewX(-20deg);
+    transition: left 0.5s;
+}
+.btn-login:hover:after {
+    left: 120%;
+}
+.btn-login:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 10px 24px rgba(79, 70, 229, 0.18);
+}
+
+.register-link {
+    color: #4f46e5;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+}
+.register-link:hover {
+    color: #6366f1;
+    transform: translateY(-2px) scale(1.05);
+    text-decoration: underline;
+}
+
+.forgot-link {
+    color: #6366f1;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+.forgot-link:hover {
+    color: #4f46e5;
+    text-decoration: underline;
+}
+
+.floating-shapes {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+    pointer-events: none;
+}
+.shape {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.13);
+    border-radius: 50%;
+    animation: float 15s infinite;
+}
+.shape.bike {
+    background: none;
+    font-size: 4rem;
+    color: rgba(255,255,255,0.08);
+    left: 60%;
+    top: 60%;
+    animation: float 18s infinite;
+}
+.shape:nth-child(1) {
+    width: 100px;
+    height: 100px;
+    left: 10%;
+    top: 10%;
+    animation-delay: 0s;
+}
+.shape:nth-child(2) {
+    width: 150px;
+    height: 150px;
+    right: 20%;
+    top: 30%;
+    animation-delay: 2s;
+}
+.shape:nth-child(3) {
+    width: 70px;
+    height: 70px;
+    left: 35%;
+    top: 20%;
+    animation-delay: 4s;
+}
+@keyframes float {
+    0% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(180deg); }
+    100% { transform: translateY(0) rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+    .login-card { border-radius: 1rem; }
+    .brand-logo { font-size: 2.2rem; }
+    .brand-title { font-size: 1.3rem; }
+}
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <h2 class="card-title text-center mb-4">Iniciar Sesión</h2>
-                    
-                    {% if messages %}
-                        {% for message in messages %}
-                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
-                                {{ message }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+<div class="login-container position-relative">
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape bike"><i class="fas fa-bicycle"></i></div>
+    </div>
+    <div class="container min-vh-100 d-flex align-items-center justify-content-center py-5">
+        <div class="row justify-content-center w-100">
+            <div class="col-md-8 col-lg-6">
+                <div class="login-card card rounded-4 overflow-hidden">
+                    <div class="text-center pt-5">
+                        <div class="brand-logo">
+                            <i class="fas fa-bicycle" aria-hidden="true"></i>
+                        </div>
+                        <div class="brand-title">MasterBikes</div>
+                        <div class="slogan">Tu viaje comienza aquí</div>
+                    </div>
+                    <div class="card-body p-4 p-sm-5">
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }} alert-dismissible fade show d-flex align-items-center" role="alert">
+                                    <i class="fas fa-exclamation-triangle me-2"></i>
+                                    <div>{{ message }}</div>
+                                    <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                        <form method="post" class="needs-validation" novalidate aria-label="Formulario de inicio de sesión">
+                            {% csrf_token %}
+                            <div class="form-floating mb-4">
+                                <input type="text" class="form-control rounded-3" id="username" name="username" placeholder="Usuario" required aria-label="Usuario">
+                                <label for="username">
+                                    <i class="fas fa-user text-muted me-2"></i>Usuario
+                                </label>
+                                <div class="invalid-feedback">
+                                    Por favor ingresa tu nombre de usuario
+                                </div>
                             </div>
-                        {% endfor %}
-                    {% endif %}
-
-                    <form method="post">
-                        {% csrf_token %}
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Usuario</label>
-                            <input type="text" class="form-control" id="username" name="username" required>
+                            <div class="form-floating mb-4">
+                                <input type="password" class="form-control rounded-3" id="password" name="password" placeholder="Contraseña" required aria-label="Contraseña">
+                                <label for="password">
+                                    <i class="fas fa-lock text-muted me-2"></i>Contraseña
+                                </label>
+                                <div class="invalid-feedback">
+                                    Por favor ingresa tu contraseña
+                                </div>
+                            </div>
+                            <div class="mb-3 text-end">
+                                <a href="#" class="forgot-link">¿Olvidaste tu contraseña?</a>
+                            </div>
+                            <div class="d-grid gap-2 mb-4">
+                                <button type="submit" class="btn btn-login btn-lg text-white rounded-3" aria-label="Iniciar sesión">
+                                    <i class="fas fa-sign-in-alt me-2"></i>Iniciar Sesión
+                                </button>
+                            </div>
+                        </form>
+                        <div class="text-center">
+                            <p class="text-muted mb-0">¿No tienes una cuenta?</p>
+                            <a href="{% url 'usuarios:registro' %}" class="register-link btn btn-link text-decoration-none d-inline-flex align-items-center" aria-label="Registrarse">
+                                <i class="fas fa-user-plus me-2"></i>Regístrate aquí
+                            </a>
                         </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" id="password" name="password" required>
-                        </div>
-                        <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
-                        </div>
-                    </form>
-
-                    <div class="text-center mt-3">
-                        <p>¿No tienes una cuenta? <a href="{% url 'usuarios:registro' %}">Regístrate aquí</a></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Validación de formulario
+(function () {
+    'use strict'
+    var forms = document.querySelectorAll('.needs-validation')
+    Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+                form.classList.add('was-validated')
+            }, false)
+        })
+})()
+</script>
 {% endblock %} 
