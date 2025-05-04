@@ -173,15 +173,18 @@ Plataforma web para gestión integral de arriendo, venta y reparación de bicicl
 - Mejorada la página de inicio
 - Implementado sistema de mensajes
 
-### Mejoras visuales y refactor de estructura (Abril 2025)
-- Unificación y modernización del footer y navbar en `base.html` para lograr una navegación y pie de página consistentes en todo el sitio.
-- Eliminación de footers y navbars duplicados en las plantillas, asegurando limpieza y claridad en la estructura.
-- Footer moderno, con enlaces sociales y tagline, presente en todas las páginas.
-- Rediseño visual del hero en la página de inicio: altura y padding optimizados, degradado más suave, texto principal y subtítulo con tamaño equilibrado, y SVG decorativo mejor posicionado.
-- Agregada flecha animada de scroll en el hero para invitar a explorar el contenido.
-- Transición visual más fluida entre el hero y las tarjetas principales.
-- Mejoras de responsividad y adaptación a dispositivos móviles en el hero y elementos principales.
-- Separación de commits por tipo de cambio (estructura global vs. mejoras visuales) y mensajes de commit descriptivos para facilitar el seguimiento del historial.
+### Mejoras visuales y accesibilidad en login (mayo 2025)
+- Fondo del login con degradado y textura sutil para mayor personalidad.
+- Tarjeta de login más compacta, con sombra profunda y animación de entrada.
+- Botón de login con gradiente vibrante y efecto glow al hacer hover.
+- Switch moderno para la opción “Recordarme” (en vez de checkbox clásico).
+- Tooltip accesible en el icono de mostrar/ocultar contraseña.
+- Microcopy motivacional personalizado bajo el slogan.
+- Feedback de error más visible y accesible.
+- Mejoras de accesibilidad: `aria-labels` en inputs y botones.
+- Responsive optimizado para móvil.
+- Detalles visuales extra: icono en “¿Olvidaste tu contraseña?”, mejor alineación de elementos.
+- Funcionalidad extra: mostrar/ocultar contraseña y aviso de “Caps Lock activado”.
 
 ## URLs Disponibles
 - http://127.0.0.1:8000/ - Página de inicio
