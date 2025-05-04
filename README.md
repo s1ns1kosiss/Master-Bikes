@@ -128,7 +128,7 @@ masterbikes/
 
 ## Soporte
 
-Para soporte, contactar a [tu-email@ejemplo.com]
+Para soporte, contactar a benjamincontreras2b@gmail.com
 
 ## Licencia
 
