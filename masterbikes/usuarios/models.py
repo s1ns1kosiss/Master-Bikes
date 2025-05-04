@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from .permissions import assign_rol_permissions
 
 class Usuario(AbstractUser):
     ROLES = [
@@ -25,3 +26,12 @@ class Usuario(AbstractUser):
 
     def __str__(self):
         return f"{self.username} ({self.get_rol_display()})"
+
+    def save(self, *args, **kwargs):
+        # Evitar recursión infinita
+        is_new = self._state.adding
+        super().save(*args, **kwargs)
+        
+        # Solo asignar permisos si es un nuevo usuario o si el rol ha cambiado
+        if is_new or 'rol' in kwargs.get('update_fields', []):
+            assign_rol_permissions(self)

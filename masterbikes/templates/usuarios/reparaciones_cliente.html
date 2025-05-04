@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Mis Reparaciones - MasterBikes{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Mis Reparaciones</h2>
+    
+    <div class="row mt-4">
+        {% if reparaciones %}
+            {% for reparacion in reparaciones %}
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ reparacion.producto.nombre }}</h5>
+                            <div class="card-text">
+                                <p><strong>Fecha de solicitud:</strong> {{ reparacion.fecha_solicitud|date:"d/m/Y" }}</p>
+                                <p><strong>Estado:</strong> {{ reparacion.get_estado_display }}</p>
+                                <p><strong>Costo:</strong> ${{ reparacion.costo }}</p>
+                                <p><strong>Descripción del problema:</strong> {{ reparacion.descripcion_problema }}</p>
+                                {% if reparacion.observaciones %}
+                                    <p><strong>Observaciones:</strong> {{ reparacion.observaciones }}</p>
+                                {% endif %}
+                                {% if reparacion.tecnico %}
+                                    <p><strong>Técnico asignado:</strong> {{ reparacion.tecnico.get_full_name }}</p>
+                                {% endif %}
+                            </div>
+                            <div class="mt-3">
+                                <span class="badge {% if reparacion.estado == 'PENDIENTE' %}bg-warning{% elif reparacion.estado == 'EN_PROCESO' %}bg-primary{% elif reparacion.estado == 'COMPLETADA' %}bg-success{% else %}bg-secondary{% endif %}">
+                                    {{ reparacion.get_estado_display }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-12">
+                <div class="alert alert-info">
+                    No tienes reparaciones registradas.
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    
+    <div class="mt-4">
+        <a href="{% url 'usuarios:perfil_cliente' %}" class="btn btn-secondary">Volver al perfil</a>
+    </div>
+</div>
+{% endblock %} 

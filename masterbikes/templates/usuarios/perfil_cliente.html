@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %}Mi Perfil - MasterBikes{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Información Personal</h5>
+                    <p><strong>Nombre:</strong> {{ usuario.nombre }} {{ usuario.apellido }}</p>
+                    <p><strong>RUT:</strong> {{ usuario.rut }}</p>
+                    <p><strong>Email:</strong> {{ usuario.email }}</p>
+                    <p><strong>Teléfono:</strong> {{ usuario.telefono }}</p>
+                    <p><strong>Dirección:</strong> {{ usuario.direccion }}</p>
+                    <a href="{% url 'usuarios:editar_perfil' %}" class="btn btn-primary">Editar Perfil</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Mis Arriendos</h5>
+                    {% if arriendos %}
+                        <div class="list-group">
+                            {% for arriendo in arriendos %}
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1">{{ arriendo.producto.nombre }}</h6>
+                                        <small>{{ arriendo.fecha_inicio|date:"d/m/Y" }}</small>
+                                    </div>
+                                    <p class="mb-1">Estado: {{ arriendo.get_estado_display }}</p>
+                                    <small>Total: ${{ arriendo.total }}</small>
+                                </a>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p>No tienes arriendos activos.</p>
+                    {% endif %}
+                    <a href="{% url 'usuarios:arriendos_cliente' %}" class="btn btn-outline-primary mt-3">Ver todos los arriendos</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Mis Reparaciones</h5>
+                    {% if reparaciones %}
+                        <div class="list-group">
+                            {% for reparacion in reparaciones %}
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1">{{ reparacion.producto.nombre }}</h6>
+                                        <small>{{ reparacion.fecha_solicitud|date:"d/m/Y" }}</small>
+                                    </div>
+                                    <p class="mb-1">Estado: {{ reparacion.get_estado_display }}</p>
+                                    <small>Costo: ${{ reparacion.costo }}</small>
+                                </a>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p>No tienes reparaciones activas.</p>
+                    {% endif %}
+                    <a href="{% url 'usuarios:reparaciones_cliente' %}" class="btn btn-outline-primary mt-3">Ver todas las reparaciones</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
