@@ -296,23 +296,20 @@ body.dark-mode .register-link:hover, body.dark-mode .forgot-link:hover {
 {% endblock %}
 
 {% block content %}
-<div class="login-container position-relative">
-    <button class="toggle-darkmode" id="toggleDarkMode" aria-label="Cambiar modo oscuro/claro">
-        <i class="fas fa-moon"></i>
-    </button>
+<div class="login-container position-relative" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem 0;">
     <div class="floating-shapes">
         <div class="shape"></div>
         <div class="shape"></div>
         <div class="shape"></div>
         <div class="shape bike"><i class="fas fa-bicycle"></i></div>
     </div>
-    <div class="container min-vh-100 d-flex align-items-center justify-content-center py-5">
+    <div class="container d-flex align-items-center justify-content-center" style="min-height: 70vh;">
         <div class="row justify-content-center w-100">
-            <div class="col-md-8 col-lg-6">
-                <div class="login-card card rounded-4 overflow-hidden" id="loginCard">
+            <div class="col-md-7 col-lg-5">
+                <div class="login-card card rounded-4 overflow-hidden" id="loginCard" style="box-shadow: 0 8px 32px 0 rgba(79, 70, 229, 0.13), 0 1.5rem 3rem rgba(0,0,0,0.10);">
                     <div class="inner-shadow"></div>
-                    <div class="text-center pt-5">
-                        <div class="brand-logo">
+                    <div class="text-center pt-4">
+                        <div class="brand-logo animate__animated animate__fadeInDown animate__slow">
                             <i class="fas fa-bicycle" aria-hidden="true"></i>
                         </div>
                         <div class="brand-title">MasterBikes</div>
@@ -348,8 +345,12 @@ body.dark-mode .register-link:hover, body.dark-mode .forgot-link:hover {
                                     Por favor ingresa tu contraseña
                                 </div>
                             </div>
+                            <div class="form-check mb-3 text-start">
+                                <input type="checkbox" class="form-check-input" id="remember_me" name="remember_me">
+                                <label class="form-check-label" for="remember_me">Recordarme</label>
+                            </div>
                             <div class="mb-3 text-end">
-                                <a href="#" class="forgot-link">¿Olvidaste tu contraseña?</a>
+                                <a href="{% url 'usuarios:password_reset' %}" class="forgot-link">¿Olvidaste tu contraseña?</a>
                             </div>
                             <div class="d-grid gap-2 mb-4">
                                 <button type="submit" class="btn btn-login btn-lg text-white rounded-3" aria-label="Iniciar sesión" id="loginBtn">
