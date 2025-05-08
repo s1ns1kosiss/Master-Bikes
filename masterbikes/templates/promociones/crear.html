@@ -1,0 +1,443 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block title %}Nueva Promoción - MasterBikes{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'promociones:lista_promociones' %}">Promociones</a></li>
+            <li class="breadcrumb-item active">Nueva Promoción</li>
+        </ol>
+    </nav>
+
+    <div class="glass-card shadow-lg border-0 animate__animated animate__fadeIn">
+        <div class="glass-header position-relative d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center gap-3">
+                <div class="glass-avatar">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3468/3468379.png" alt="Promoción" width="56" height="56">
+                </div>
+                <h1 class="h3 mb-0 text-white fw-bold">Nueva Promoción</h1>
+            </div>
+            <div class="glass-badge d-none d-md-block">🎉</div>
+        </div>
+        <div class="glass-body p-4">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} fade show animate__animated animate__fadeInDown" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            <form method="post" class="needs-validation" novalidate autocomplete="off" id="promoForm">
+                {% csrf_token %}
+                <!-- Sección de Información Básica -->
+                <div class="promo-section mb-4 animate__animated animate__fadeInUp animate__fast">
+                    <h4 class="section-title">
+                        <span class="icon-section"><i class="fas fa-info-circle"></i></span>
+                        Información Básica
+                    </h4>
+                    <div class="row g-3 align-items-end">
+                        <div class="col-md-6">
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-text bg-transparent border-0"><i class="fas fa-heading"></i></span>
+                                {{ form.titulo|add_class:'form-control glass-input'|attr:'aria-label:Título de la Promoción'|attr:'required' }}
+                            </div>
+                            <div class="form-text text-muted ms-1"><i class="fas fa-question-circle" data-bs-toggle="tooltip" title="Nombre corto y descriptivo para la promoción."></i></div>
+                            <div class="invalid-feedback animate__animated animate__shakeX">
+                                {% for error in form.titulo.errors %}{{ error }}{% endfor %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-text bg-transparent border-0"><i class="fas fa-users"></i></span>
+                                {{ form.tipo_cliente|add_class:'form-select glass-input'|attr:'aria-label:Tipo de Cliente'|attr:'required' }}
+                            </div>
+                            <div class="form-text text-muted ms-1"><i class="fas fa-question-circle" data-bs-toggle="tooltip" title="¿A qué tipo de usuario va dirigida la promoción?"></i></div>
+                            <div class="invalid-feedback animate__animated animate__shakeX">
+                                {% for error in form.tipo_cliente.errors %}{{ error }}{% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Sección de Descripción -->
+                <div class="promo-section mb-4 animate__animated animate__fadeInUp animate__fast">
+                    <h4 class="section-title">
+                        <span class="icon-section"><i class="fas fa-align-left"></i></span>
+                        Descripción
+                    </h4>
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-text bg-transparent border-0 align-items-start pt-3"><i class="fas fa-pen"></i></span>
+                        {{ form.descripcion|add_class:'form-control glass-input'|attr:'aria-label:Descripción de la Promoción'|attr:'required' }}
+                    </div>
+                    <div class="form-text text-muted ms-1"><i class="fas fa-question-circle" data-bs-toggle="tooltip" title="Explica brevemente en qué consiste la promoción."></i></div>
+                    <div class="invalid-feedback animate__animated animate__shakeX">
+                        {% for error in form.descripcion.errors %}{{ error }}{% endfor %}
+                    </div>
+                </div>
+                <!-- Sección de Fechas y Descuento -->
+                <div class="promo-section mb-4 animate__animated animate__fadeInUp animate__fast">
+                    <h4 class="section-title">
+                        <span class="icon-section"><i class="fas fa-calendar-alt"></i></span>
+                        Período y Descuento
+                    </h4>
+                    <div class="row g-3 align-items-end">
+                        <div class="col-md-4">
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-text bg-transparent border-0"><i class="fas fa-calendar-day"></i></span>
+                                {{ form.fecha_inicio|add_class:'form-control glass-input'|attr:'aria-label:Fecha de Inicio'|attr:'required' }}
+                            </div>
+                            <div class="invalid-feedback animate__animated animate__shakeX">
+                                {% for error in form.fecha_inicio.errors %}{{ error }}{% endfor %}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-text bg-transparent border-0"><i class="fas fa-calendar-check"></i></span>
+                                {{ form.fecha_fin|add_class:'form-control glass-input'|attr:'aria-label:Fecha de Fin'|attr:'required' }}
+                            </div>
+                            <div class="invalid-feedback animate__animated animate__shakeX">
+                                {% for error in form.fecha_fin.errors %}{{ error }}{% endfor %}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group input-group-lg position-relative">
+                                <span class="input-group-text bg-transparent border-0"><i class="fas fa-percent"></i></span>
+                                {{ form.descuento|add_class:'form-control glass-input'|attr:'aria-label:Descuento (%)'|attr:'required' }}
+                                <span class="badge bg-info position-absolute top-0 end-0 mt-2 me-2" data-bs-toggle="tooltip" title="Introduce un valor entre 0 y 100">0-100%</span>
+                            </div>
+                            <div class="invalid-feedback animate__animated animate__shakeX">
+                                {% for error in form.descuento.errors %}{{ error }}{% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Sección de Productos y Usuarios -->
+                <div class="promo-section mb-4 animate__animated animate__fadeInUp animate__fast">
+                    <h4 class="section-title">
+                        <span class="icon-section"><i class="fas fa-tags"></i></span>
+                        Productos y Usuarios
+                    </h4>
+                    <div class="row g-3 align-items-end">
+                        <div class="col-md-6">
+                            <label for="{{ form.productos.id_for_label }}" class="form-label">
+                                <i class="fas fa-bicycle me-2"></i>Productos Incluidos
+                            </label>
+                            {{ form.productos|add_class:'select2 glass-input'|attr:'aria-label:Productos Incluidos'|attr:'required' }}
+                            <div class="form-text text-muted ms-1"><i class="fas fa-question-circle" data-bs-toggle="tooltip" title="Selecciona los productos que participan en la promoción."></i></div>
+                            <div class="invalid-feedback animate__animated animate__shakeX">
+                                {% for error in form.productos.errors %}{{ error }}{% endfor %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="{{ form.usuarios_destinatarios.id_for_label }}" class="form-label">
+                                <i class="fas fa-users me-2"></i>Usuarios Destinatarios
+                            </label>
+                            {{ form.usuarios_destinatarios|add_class:'select2 glass-input'|attr:'aria-label:Usuarios Destinatarios' }}
+                            <div class="form-text text-muted ms-1"><i class="fas fa-question-circle" data-bs-toggle="tooltip" title="Puedes limitar la promoción a usuarios específicos."></i></div>
+                            <div class="invalid-feedback animate__animated animate__shakeX">
+                                {% for error in form.usuarios_destinatarios.errors %}{{ error }}{% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Botones de Acción -->
+                <div class="d-flex justify-content-end gap-2 mt-4 flex-wrap">
+                    <a href="{% url 'promociones:lista_promociones' %}" class="btn glass-btn-outline btn-lg animate__animated animate__fadeInLeft">
+                        <i class="fas fa-times me-2"></i>Cancelar
+                    </a>
+                    <button type="submit" class="btn glass-btn btn-lg animate__animated animate__fadeInRight" id="btnGuardar">
+                        <span id="btnText"><i class="fas fa-save me-2"></i>Guardar Promoción</span>
+                        <span id="btnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet" />
+<style>
+    body {
+        background: linear-gradient(135deg, #e0e7ff 0%, #f8fafc 100%);
+        min-height: 100vh;
+    }
+    .glass-card {
+        background: rgba(255,255,255,0.7);
+        box-shadow: 0 8px 32px 0 rgba(31,38,135,0.18);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-radius: 2rem;
+        overflow: hidden;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+        border: 1px solid rgba(255,255,255,0.18);
+        transition: background 0.3s;
+    }
+    .glass-header {
+        background: linear-gradient(90deg, #2563eb 60%, #60a5fa 100%);
+        padding: 2rem 2.5rem 1.5rem 2.5rem;
+        border-bottom: 1px solid rgba(255,255,255,0.18);
+        border-radius: 2rem 2rem 0 0;
+        box-shadow: 0 4px 24px 0 rgba(37,99,235,0.10);
+    }
+    .glass-avatar {
+        background: rgba(255,255,255,0.25);
+        border-radius: 50%;
+        padding: 0.5rem;
+        box-shadow: 0 2px 8px rgba(37,99,235,0.10);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .glass-badge {
+        font-size: 2.5rem;
+        background: rgba(255,255,255,0.25);
+        border-radius: 1rem;
+        padding: 0.5rem 1.5rem;
+        box-shadow: 0 2px 8px rgba(37,99,235,0.10);
+    }
+    .glass-body {
+        background: transparent;
+        border-radius: 0 0 2rem 2rem;
+    }
+    .promo-section {
+        background: rgba(255,255,255,0.55);
+        border-radius: 1.2rem;
+        padding: 1.5rem;
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.04);
+        margin-bottom: 2rem;
+        animation-duration: 0.7s;
+        border: 1px solid rgba(37,99,235,0.08);
+    }
+    .section-title {
+        color: #2563eb;
+        font-size: 1.2rem;
+        margin-bottom: 1.2rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid #e0e7ff;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+    .icon-section {
+        background: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%);
+        color: #fff;
+        border-radius: 0.7rem;
+        padding: 0.4rem 0.7rem;
+        font-size: 1.2rem;
+        margin-right: 0.5rem;
+        box-shadow: 0 2px 8px rgba(37,99,235,0.10);
+    }
+    .glass-input {
+        background: rgba(255,255,255,0.85) !important;
+        border: 1.5px solid #e0e7ff !important;
+        border-radius: 1rem !important;
+        box-shadow: 0 1px 4px rgba(37,99,235,0.04);
+        font-size: 1.1rem;
+        transition: border 0.2s, box-shadow 0.2s;
+    }
+    .glass-input:focus {
+        border: 1.5px solid #2563eb !important;
+        box-shadow: 0 0 0 0.2rem rgba(37,99,235,0.15);
+        background: rgba(255,255,255,0.95) !important;
+    }
+    .input-group-text {
+        background: transparent !important;
+        border: none !important;
+        color: #2563eb !important;
+        font-size: 1.3rem;
+    }
+    .select2-container {
+        width: 100% !important;
+    }
+    .select2-container--default .select2-selection--multiple {
+        border: 1.5px solid #e0e7ff;
+        border-radius: 1rem;
+        min-height: 48px;
+        background: rgba(255,255,255,0.85);
+        transition: box-shadow 0.2s;
+        box-shadow: 0 1px 4px rgba(37,99,235,0.04);
+    }
+    .select2-container--default .select2-selection--multiple:focus {
+        box-shadow: 0 0 0 0.2rem rgba(37,99,235,0.15);
+    }
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+        background: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%);
+        color: #fff;
+        border: none;
+        border-radius: 0.7rem;
+        padding: 0.25rem 0.7rem;
+        margin: 0.25rem;
+        font-weight: 500;
+        font-size: 1rem;
+        box-shadow: 0 1px 2px rgba(37,99,235,0.10);
+        transition: background 0.2s;
+    }
+    .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+        color: #fff;
+        margin-right: 0.5rem;
+        font-size: 1.1em;
+    }
+    .select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
+        color: #dc3545;
+    }
+    .glass-btn {
+        background: linear-gradient(90deg, #2563eb 60%, #60a5fa 100%);
+        color: #fff;
+        border: none;
+        box-shadow: 0 2px 8px rgba(37,99,235,0.10);
+        border-radius: 1rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        transition: background 0.2s, box-shadow 0.2s;
+    }
+    .glass-btn:hover, .glass-btn:focus {
+        background: linear-gradient(90deg, #60a5fa 60%, #2563eb 100%);
+        color: #fff;
+        box-shadow: 0 4px 16px rgba(37,99,235,0.15);
+    }
+    .glass-btn-outline {
+        background: transparent;
+        color: #2563eb;
+        border: 2px solid #2563eb;
+        border-radius: 1rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        transition: background 0.2s, color 0.2s;
+    }
+    .glass-btn-outline:hover, .glass-btn-outline:focus {
+        background: #2563eb;
+        color: #fff;
+    }
+    .spinner-border {
+        vertical-align: middle;
+        margin-left: 0.5rem;
+    }
+    @media (max-width: 768px) {
+        .glass-card {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+        .glass-header {
+            padding: 1.2rem 1rem 1rem 1rem;
+        }
+        .promo-section {
+            padding: 1rem;
+        }
+        .btn {
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+        .d-flex.justify-content-end.gap-2.mt-4 {
+            flex-direction: column;
+            align-items: stretch;
+        }
+    }
+    /* Modo oscuro */
+    body.dark-mode {
+        background: linear-gradient(135deg, #181c2f 0%, #232946 100%) !important;
+    }
+    body.dark-mode .glass-card {
+        background: rgba(24,28,47,0.85) !important;
+        border: 1px solid rgba(96,165,250,0.10) !important;
+    }
+    body.dark-mode .glass-header {
+        background: linear-gradient(90deg, #232946 60%, #2563eb 100%) !important;
+        color: #fff !important;
+    }
+    body.dark-mode .glass-body, body.dark-mode .promo-section {
+        background: rgba(24,28,47,0.65) !important;
+        border: 1px solid rgba(96,165,250,0.10) !important;
+    }
+    body.dark-mode .section-title, body.dark-mode .icon-section {
+        color: #60a5fa !important;
+        border-bottom: 2px solid #232946 !important;
+    }
+    body.dark-mode .glass-input, body.dark-mode .select2-container--default .select2-selection--multiple {
+        background: rgba(24,28,47,0.85) !important;
+        color: #fff !important;
+        border: 1.5px solid #232946 !important;
+    }
+    body.dark-mode .glass-input:focus {
+        border: 1.5px solid #60a5fa !important;
+        background: rgba(24,28,47,0.95) !important;
+    }
+    body.dark-mode .input-group-text {
+        color: #60a5fa !important;
+    }
+    body.dark-mode .select2-container--default .select2-selection--multiple .select2-selection__choice {
+        background: linear-gradient(135deg, #232946 0%, #60a5fa 100%) !important;
+        color: #fff !important;
+    }
+    body.dark-mode .glass-btn {
+        background: linear-gradient(90deg, #232946 60%, #60a5fa 100%) !important;
+        color: #fff !important;
+    }
+    body.dark-mode .glass-btn-outline {
+        color: #60a5fa !important;
+        border: 2px solid #60a5fa !important;
+    }
+    body.dark-mode .glass-btn-outline:hover, body.dark-mode .glass-btn-outline:focus {
+        background: #60a5fa !important;
+        color: #232946 !important;
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Inicializar Select2
+        $('.select2').select2({
+            placeholder: "Seleccione...",
+            allowClear: true,
+            theme: "bootstrap-5",
+            width: '100%'
+        });
+        // Tooltips Bootstrap
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+        // Feedback visual en tiempo real y validación HTML5
+        $('form').on('input change', 'input, select, textarea', function() {
+            if (this.checkValidity()) {
+                $(this).removeClass('is-invalid').addClass('is-valid');
+            } else {
+                $(this).removeClass('is-valid').addClass('is-invalid');
+            }
+        });
+        // Navegación por teclado: enfocar el siguiente campo con Enter
+        $('input, select, textarea').on('keydown', function(e) {
+            if (e.key === 'Enter') {
+                var inputs = $('input, select, textarea');
+                var idx = inputs.index(this);
+                if (idx !== -1 && idx + 1 < inputs.length) {
+                    inputs[idx + 1].focus();
+                    e.preventDefault();
+                }
+            }
+        });
+        // Feedback visual al enviar (spinner)
+        $('#promoForm').on('submit', function() {
+            $('#btnText').addClass('d-none');
+            $('#btnSpinner').removeClass('d-none');
+            $('#btnGuardar').prop('disabled', true);
+        });
+        // Adaptar modo oscuro automáticamente si el body tiene la clase dark-mode
+        if (localStorage.getItem('theme') === 'dark' || document.body.classList.contains('dark-mode')) {
+            document.body.classList.add('dark-mode');
+        }
+    });
+</script>
+{% endblock %} 

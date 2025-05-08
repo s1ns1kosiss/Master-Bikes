@@ -2,6 +2,25 @@
 
 Plataforma web para gestión integral de arriendo, venta y reparación de bicicletas.
 
+## Estado Actual del Proyecto
+
+### Funcionalidades Implementadas ✅
+- Sistema completo de autenticación (login/registro)
+- Gestión de usuarios con roles (Cliente, Técnico, Vendedor, Supervisor)
+- Catálogo de productos (bicicletas y accesorios)
+- Sistema de arriendos
+- Sistema de reparaciones
+- Interfaz moderna con Bootstrap 5 y Font Awesome
+- Modo oscuro/claro
+- Diseño responsive
+
+### Próximas Funcionalidades 🚀
+- Sistema de promociones
+- Sistema de despachos
+- Reportes y estadísticas
+- Sistema de pagos
+- Migración a PostgreSQL en producción
+
 ## Requisitos Previos
 
 - Python 3.8 o superior
@@ -68,10 +87,24 @@ Plataforma web para gestión integral de arriendo, venta y reparación de bicicl
    ```
    > **Nota**: El superusuario es necesario para acceder al panel de administración.
 
-8. **Iniciar servidor de desarrollo**
+8. **Crear usuarios de prueba**
+   ```bash
+   python manage.py create_test_users
+   ```
+
+9. **Iniciar servidor de desarrollo**
    ```bash
    python manage.py runserver
    ```
+
+## URLs Disponibles
+
+- http://127.0.0.1:8000/ - Página de inicio
+- http://127.0.0.1:8000/usuarios/login/ - Iniciar sesión
+- http://127.0.0.1:8000/usuarios/registro/ - Registrarse
+- http://127.0.0.1:8000/productos/ - Lista de productos
+- http://127.0.0.1:8000/arriendos/ - Lista de arriendos
+- http://127.0.0.1:8000/reparaciones/ - Lista de reparaciones
 
 ## Estructura del Proyecto
 
@@ -81,9 +114,9 @@ masterbikes/
 ├── productos/         # Catálogo de bicicletas y accesorios
 ├── arriendos/         # Gestión de arriendos
 ├── reparaciones/      # Servicio técnico
-├── despachos/         # Gestión de entregas
-├── promociones/       # Sistema de promociones
-├── reportes/          # Generación de reportes
+├── despachos/         # Gestión de entregas (pendiente)
+├── promociones/       # Sistema de promociones (pendiente)
+├── reportes/          # Generación de reportes (pendiente)
 └── templates/         # Plantillas HTML
 ```
 
@@ -94,6 +127,8 @@ masterbikes/
 - django-widget-tweaks (para formularios)
 - psycopg2-binary (para PostgreSQL)
 - python-dotenv (para variables de entorno)
+- Bootstrap 5
+- Font Awesome 6
 
 ## Desarrollo
 
@@ -123,6 +158,11 @@ masterbikes/
    # Verificar estilo
    flake8
    ```
+
+## Convención de Commits
+
+- `feature:` para lógica, modelos y funcionalidades principales
+- `design:` para cambios de estructura, admin, documentación, etc.
 
 ## Despliegue
 

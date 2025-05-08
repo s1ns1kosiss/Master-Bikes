@@ -4,6 +4,103 @@
 
 {% block extra_css %}
 <style>
+:root {
+    --primary: #4f46e5;
+    --secondary: #6366f1;
+    --dark-bg: #18181b;
+    --dark-card: rgba(36,37,46,0.98);
+    --dark-text: #f3f4f6;
+}
+
+body.dark-mode {
+    background: var(--dark-bg) !important;
+}
+
+body.dark-mode .register-bg {
+    background: linear-gradient(135deg, #232946 0%, #18181b 100%) !important;
+}
+
+body.dark-mode .register-card {
+    background: var(--dark-card) !important;
+    color: var(--dark-text);
+    box-shadow: 0 16px 64px 0 rgba(36,37,46,0.28), 0 2rem 4rem rgba(0,0,0,0.20);
+}
+
+body.dark-mode .form-control {
+    background: #232946;
+    color: #f3f4f6;
+    border-color: #6366f1;
+}
+
+body.dark-mode .form-control:focus {
+    border-color: #a5b4fc;
+    box-shadow: 0 0 0 0.25rem rgba(99,102,241,0.15);
+}
+
+body.dark-mode .input-group-text {
+    background: #232946;
+    color: #a5b4fc;
+    border-color: #6366f1;
+}
+
+body.dark-mode .form-label {
+    color: #f3f4f6;
+}
+
+body.dark-mode .text-muted {
+    color: #a1a1aa !important;
+}
+
+body.dark-mode .section-title {
+    color: #a5b4fc;
+}
+
+body.dark-mode .section-divider {
+    border-color: #6366f1;
+}
+
+body.dark-mode .btn-register {
+    background: linear-gradient(90deg, #6366f1 0%, #4f46e5 100%);
+    color: #ffffff;
+}
+
+body.dark-mode .btn-register:hover {
+    background: linear-gradient(90deg, #4f46e5 0%, #6366f1 100%);
+    color: #ffffff;
+}
+
+body.dark-mode .login-link {
+    color: #a1a1aa;
+}
+
+body.dark-mode .login-link a {
+    color: #a5b4fc;
+}
+
+body.dark-mode .login-link a:hover {
+    color: #818cf8;
+}
+
+body.dark-mode .alert-danger {
+    background: #7f1d1d;
+    color: #fecaca;
+    border-color: #ef4444;
+}
+
+body.dark-mode .register-bg::before {
+    background-image: url('data:image/svg+xml;utf8,<svg width="100%25" height="100%25" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="2" fill="%236366f122"/><circle cx="80" cy="80" r="1.5" fill="%236366f122"/><circle cx="200" cy="60" r="1.5" fill="%236366f122"/><circle cx="400" cy="100" r="2" fill="%236366f122"/></svg>');
+    opacity: 0.15;
+}
+
+body.dark-mode .svg-deco path {
+    fill: #6366f1;
+    fill-opacity: 0.15;
+}
+
+body.dark-mode .watermark {
+    color: rgba(99, 102, 241, 0.15);
+}
+
 .register-bg {
     background: linear-gradient(120deg, #f8fafc 0%, #e0e7ff 100%);
     min-height: 100vh;
