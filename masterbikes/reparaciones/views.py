@@ -22,6 +22,10 @@ def nueva_reparacion(request):
             reparacion = form.save(commit=False)
             reparacion.usuario = request.user
             reparacion.save()
+            # Cambiar estado del producto a EN_REPARACION
+            producto = reparacion.producto
+            producto.estado = 'EN_REPARACION'
+            producto.save()
             messages.success(request, 'Reparación creada exitosamente.')
             return redirect('reparaciones:detalle', reparacion_id=reparacion.id)
     else:

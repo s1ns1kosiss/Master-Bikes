@@ -6,8 +6,8 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6">
-            {% if producto.imagen %}
-                <img src="{{ producto.imagen.url }}" class="img-fluid rounded" alt="{{ producto.nombre }}">
+            {% if producto.imagen_url %}
+                <img src="{{ producto.imagen_url }}" class="img-fluid rounded" alt="{{ producto.nombre }}">
             {% else %}
                 <div class="bg-light text-center py-5 rounded">
                     <i class="fas fa-bicycle fa-5x text-muted"></i>
@@ -22,9 +22,9 @@
                 <div class="card-body">
                     <h5 class="card-title">Detalles del Producto</h5>
                     <ul class="list-unstyled">
-                        <li><strong>Precio por día:</strong> ${{ producto.precio_dia }}</li>
+                        <li><strong>Precio:</strong> ${{ producto.precio }}</li>
                         <li><strong>Estado:</strong> {{ producto.get_estado_display }}</li>
-                        <li><strong>Categoría:</strong> {{ producto.get_categoria_display }}</li>
+                        <li><strong>Categoría:</strong> {{ producto.get_tipo_display }}</li>
                     </ul>
                 </div>
             </div>

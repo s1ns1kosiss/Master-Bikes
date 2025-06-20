@@ -7,4 +7,5 @@ urlpatterns = [
     path('', views.lista_arriendos, name='lista'),
     path('nuevo/', views.nuevo_arriendo, name='nuevo'),
     path('<int:arriendo_id>/', views.detalle_arriendo, name='detalle'),
+    path('<int:arriendo_id>/finalizar/', views.finalizar_arriendo, name='finalizar'),
 ] 

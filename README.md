@@ -203,4 +203,10 @@ Para soporte, contactar a [benjamincontreras2120@gmail.com]
 
 ## Licencia
 
-Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE.md](LICENSE.md) para más detalles. 
+Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE.md](LICENSE.md) para más detalles.
+
+## Tecnologías
+
+- **Backend**: Django, PostgreSQL
+- **Frontend**: HTML5, CSS3, JavaScript, Bootstrap 5, jQuery, Select2, Flatpickr, Chart.js
+- **Herramientas**: Git, GitHub, Pillow, Django Crispy Forms, Django Debug Toolbar 

@@ -3,37 +3,36 @@
 {% block title %}Productos - MasterBikes{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1 class="mb-4">Nuestras Bicicletas</h1>
-    
+<div class="container mt-4">
+    <h1 class="mb-4">Catálogo de Productos</h1>
     <div class="row">
-        {% if productos %}
-            {% for producto in productos %}
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        {% if producto.imagen %}
-                            <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
-                        {% else %}
-                            <div class="card-img-top bg-light text-center py-5">
-                                <i class="fas fa-bicycle fa-3x text-muted"></i>
-                            </div>
-                        {% endif %}
-                        <div class="card-body">
-                            <h5 class="card-title">{{ producto.nombre }}</h5>
-                            <p class="card-text">{{ producto.descripcion|truncatewords:20 }}</p>
-                            <p class="card-text"><strong>Precio por día:</strong> ${{ producto.precio_dia }}</p>
-                            <a href="{% url 'productos:detalle' producto.id %}" class="btn btn-primary">Ver Detalles</a>
-                        </div>
+        {% for producto in productos %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                {% if producto.imagen_url %}
+                    <img src="{{ producto.imagen_url }}" class="card-img-top" alt="{{ producto.nombre }}">
+                {% else %}
+                    <div class="bg-light text-center py-5 rounded">
+                        <i class="fas fa-bicycle fa-3x text-muted"></i>
                     </div>
-                </div>
-            {% endfor %}
-        {% else %}
-            <div class="col-12">
-                <div class="alert alert-info">
-                    No hay productos disponibles en este momento.
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ producto.nombre }}</h5>
+                    <p class="card-text">{{ producto.descripcion|truncatewords:15 }}</p>
+                    <ul class="list-unstyled mb-2">
+                        <li><strong>Precio:</strong> ${{ producto.precio }}</li>
+                        <li><strong>Estado:</strong> {{ producto.get_estado_display }}</li>
+                        <li><strong>Categoría:</strong> {{ producto.get_tipo_display }}</li>
+                    </ul>
+                    <a href="{% url 'productos:detalle' producto.id %}" class="btn btn-outline-primary btn-sm">Ver Detalle</a>
                 </div>
             </div>
-        {% endif %}
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info">No hay productos disponibles.</div>
+        </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %} 
