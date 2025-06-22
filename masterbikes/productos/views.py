@@ -43,4 +43,17 @@ def lista_productos(request):
 def detalle_producto(request, producto_id):
     """Vista para mostrar el detalle de un producto."""
     producto = get_object_or_404(Producto, id=producto_id)
-    return render(request, 'productos/detalle.html', {'producto': producto})
+    descripcion_bullets = None
+    if producto.descripcion:
+        # Separar por saltos de línea y luego por puntos
+        lineas = producto.descripcion.splitlines()
+        bullets = []
+        for linea in lineas:
+            frases = [f.strip() for f in linea.split('.') if f.strip()]
+            bullets.extend(frases)
+        if len(bullets) > 1:
+            descripcion_bullets = bullets
+    return render(request, 'productos/detalle.html', {
+        'producto': producto,
+        'descripcion_bullets': descripcion_bullets
+    })

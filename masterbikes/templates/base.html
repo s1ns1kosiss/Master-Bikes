@@ -21,6 +21,29 @@
         background: #18181b;
         color: #f3f4f6;
     }
+    /* Fondo neón con rayos/tiras LED solo en modo oscuro */
+    body.dark-mode .neon-bg {
+        position: fixed;
+        top: 0; left: 0; width: 100vw; height: 100vh;
+        z-index: 0;
+        pointer-events: none;
+        opacity: 0.7;
+        background: radial-gradient(ellipse at 50% 0%, rgba(99,102,241,0.18) 0%, rgba(24,24,27,0.7) 70%),
+                    linear-gradient(120deg, rgba(99,102,241,0.12) 0%, rgba(24,24,27,0.7) 80%);
+    }
+    body.dark-mode .neon-bg svg {
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+        left: 0; top: 0;
+        z-index: 1;
+        opacity: 0.7;
+    }
+    /* Asegura que el contenido esté sobre el fondo */
+    body > *:not(.neon-bg) {
+        position: relative;
+        z-index: 2;
+    }
     /* Navbar glassmorphism */
     .navbar {
         position: sticky;
@@ -189,6 +212,45 @@
     {% block extra_css %}{% endblock %}
 </head>
 <body>
+    <!-- Fondo SVG decorativo modo oscuro -->
+    <div class="neon-bg d-none"></div>
+    <script>
+    // Mostrar el fondo solo en modo oscuro
+    document.addEventListener('DOMContentLoaded', function() {
+        function updateNeonBg() {
+            const neonBg = document.querySelector('.neon-bg');
+            if(document.body.classList.contains('dark-mode')) {
+                neonBg.classList.remove('d-none');
+                neonBg.innerHTML = `
+                <svg viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="led1" x1="0" y1="0" x2="1920" y2="1080" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#6366f1"/>
+                            <stop offset="1" stop-color="#818cf8"/>
+                        </linearGradient>
+                        <linearGradient id="led2" x1="1920" y1="0" x2="0" y2="1080" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#a5b4fc"/>
+                            <stop offset="1" stop-color="#6366f1"/>
+                        </linearGradient>
+                    </defs>
+                    <line x1="0" y1="100" x2="1920" y2="300" stroke="url(#led1)" stroke-width="8" opacity="0.25"/>
+                    <line x1="0" y1="400" x2="1920" y2="700" stroke="url(#led2)" stroke-width="10" opacity="0.18"/>
+                    <line x1="0" y1="900" x2="1920" y2="1000" stroke="url(#led1)" stroke-width="7" opacity="0.22"/>
+                    <line x1="200" y1="0" x2="1720" y2="1080" stroke="url(#led2)" stroke-width="6" opacity="0.13"/>
+                    <line x1="1720" y1="0" x2="200" y2="1080" stroke="url(#led1)" stroke-width="5" opacity="0.13"/>
+                </svg>
+                `;
+            } else {
+                neonBg.classList.add('d-none');
+                neonBg.innerHTML = '';
+            }
+        }
+        updateNeonBg();
+        // Si tienes un toggle de modo oscuro, escucha el cambio
+        const observer = new MutationObserver(updateNeonBg);
+        observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    });
+    </script>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg">
         <div class="container">

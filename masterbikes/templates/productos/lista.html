@@ -7,16 +7,44 @@
 <style>
     .producto-card {
         transition: transform 0.2s, box-shadow 0.2s;
+        background: #fff;
+        color: #22223b;
+        opacity: 0;
+        transform: translateY(30px) scale(0.98);
+        animation: cardFadeIn 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    }
+    @keyframes cardFadeIn {
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
     }
     .producto-card:hover {
-        transform: translateY(-8px) scale(1.03);
-        box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+        transform: translateY(-12px) scale(1.04);
+        box-shadow: 0 0 32px 0 #6366f1, 0 8px 32px rgba(36,37,46,0.25);
         z-index: 2;
+    }
+    .producto-img-zoom {
+        transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s;
+        will-change: transform;
+    }
+    .producto-card:hover .producto-img-zoom {
+        transform: scale(1.08) rotate(-2deg);
+        box-shadow: 0 0 32px 0 #6366f1;
     }
     .precio-destacado {
         font-size: 1.4rem;
         color: #198754;
         font-weight: bold;
+    }
+    .marca-neon {
+        color: #6366f1;
+        font-weight: bold;
+        letter-spacing: 0.5px;
+    }
+    body.dark-mode .marca-neon {
+        color: #a5b4fc;
+        text-shadow: 0 0 6px #818cf8, 0 0 2px #6366f1;
     }
     .placeholder-img {
         background: linear-gradient(135deg, #e0e0e0 60%, #f8f9fa 100%);
@@ -32,6 +60,107 @@
     @keyframes fadeIn {
         from { opacity: 0; }
         to { opacity: 1; }
+    }
+    /* Glow dinámico en botones */
+    .btn-primary, .btn-outline-success {
+        transition: box-shadow 0.3s, background 0.3s, color 0.3s;
+    }
+    .btn-primary:hover, .btn-primary:focus {
+        box-shadow: 0 0 24px 0 #6366f1, 0 0 8px #818cf8;
+    }
+    .btn-outline-success:hover, .btn-outline-success:focus {
+        box-shadow: 0 0 16px 0 #22c55e;
+    }
+    /* Modo oscuro con efecto neón */
+    body.dark-mode .producto-card {
+        background: #232946;
+        color: #f3f4f6;
+        box-shadow: 0 0 24px 0 #6366f1, 0 8px 32px rgba(36,37,46,0.25);
+        border: 1.5px solid #6366f1;
+    }
+    body.dark-mode .producto-card .card-title,
+    body.dark-mode .producto-card .card-text,
+    body.dark-mode .producto-card .precio-destacado {
+        color: #f3f4f6;
+        text-shadow: 0 0 4px #818cf8, 0 0 2px #6366f1;
+    }
+    body.dark-mode .producto-card .card-footer {
+        background: transparent;
+        border-top: 1px solid #343a40;
+    }
+    body.dark-mode .placeholder-img {
+        background: linear-gradient(135deg, #232946 60%, #18181b 100%);
+        box-shadow: 0 0 16px 0 #6366f1;
+    }
+    body.dark-mode .badge.bg-info,
+    body.dark-mode .badge.bg-primary,
+    body.dark-mode .badge.bg-success,
+    body.dark-mode .badge.bg-warning,
+    body.dark-mode .badge.bg-danger {
+        box-shadow: 0 0 8px 0 #6366f1, 0 0 2px #818cf8;
+    }
+    body.dark-mode .badge.bg-info {
+        background-color: #818cf8 !important;
+        color: #18181b !important;
+    }
+    body.dark-mode .badge.bg-primary {
+        background-color: #6366f1 !important;
+        color: #fff !important;
+    }
+    body.dark-mode .badge.bg-success {
+        background-color: #22c55e !important;
+        color: #fff !important;
+    }
+    body.dark-mode .badge.bg-warning {
+        background-color: #fde047 !important;
+        color: #18181b !important;
+    }
+    body.dark-mode .badge.bg-danger {
+        background-color: #ef4444 !important;
+        color: #fff !important;
+    }
+    body.dark-mode .btn-primary {
+        background-color: #6366f1;
+        border-color: #6366f1;
+        box-shadow: 0 0 16px 0 #6366f1, 0 0 4px #818cf8;
+        text-shadow: 0 0 4px #818cf8;
+    }
+    body.dark-mode .btn-primary:hover {
+        background-color: #4f46e5;
+        border-color: #4f46e5;
+        box-shadow: 0 0 24px 0 #6366f1;
+    }
+    body.dark-mode .btn-outline-success {
+        color: #22c55e;
+        border-color: #22c55e;
+        box-shadow: 0 0 8px 0 #22c55e;
+    }
+    body.dark-mode .btn-outline-success:hover {
+        background-color: #22c55e;
+        color: #fff;
+        box-shadow: 0 0 16px 0 #22c55e;
+    }
+    body.dark-mode .form-control, body.dark-mode .form-select {
+        background-color: #18181b;
+        color: #f3f4f6;
+        border-color: #343a40;
+        box-shadow: 0 0 8px 0 #6366f1;
+    }
+    body.dark-mode .form-control::placeholder {
+        color: #a5b4fc;
+        text-shadow: 0 0 4px #6366f1;
+    }
+    body.dark-mode .pagination .page-link {
+        background-color: #232946;
+        color: #a5b4fc;
+        border-color: #343a40;
+        box-shadow: 0 0 8px 0 #6366f1;
+    }
+    body.dark-mode .pagination .page-item.active .page-link {
+        background-color: #6366f1;
+        color: #fff;
+        border-color: #6366f1;
+        box-shadow: 0 0 16px 0 #6366f1;
     }
 </style>
 <div class="container mt-4 fade-in">
@@ -68,7 +197,7 @@
         <div class="col">
             <div class="card h-100 shadow-sm border-0 producto-card">
                 {% if producto.imagen_url %}
-                    <img src="{{ producto.imagen_url }}" class="card-img-top" alt="{{ producto.nombre }}" style="object-fit:cover; height:220px;">
+                    <img src="{{ producto.imagen_url }}" class="card-img-top producto-img-zoom" alt="{{ producto.nombre }}" style="object-fit:cover; height:220px;">
                 {% else %}
                     <div class="placeholder-img">
                         <svg width="64" height="64" fill="#adb5bd" viewBox="0 0 16 16">
@@ -91,8 +220,8 @@
                     <h5 class="card-title mb-1">{{ producto.nombre }}</h5>
                     {% if producto.marca or producto.modelo %}
                         <p class="mb-1 text-muted" style="font-size:0.95em;">
-                            {% if producto.marca %}<strong>{{ producto.marca }}</strong>{% endif %}
-                            {% if producto.modelo %}{{ producto.modelo }}{% endif %}
+                            {% if producto.marca %}<span class="marca-neon">{{ producto.marca }}</span>{% endif %}
+                            {% if producto.modelo %} <span class="marca-neon">{{ producto.modelo }}</span>{% endif %}
                         </p>
                     {% endif %}
                     <p class="precio-destacado mb-2">US${{ producto.precio|floatformat:2|intcomma }}</p>

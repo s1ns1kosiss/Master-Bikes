@@ -3,38 +3,225 @@
 {% block title %}{{ producto.nombre }} - MasterBikes{% endblock %}
 
 {% block content %}
+{% load humanize %}
+<style>
+    .detalle-main {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 3.5rem;
+        margin-top: 3rem;
+        margin-bottom: 3rem;
+    }
+    .detalle-img-box {
+        background: #18181b;
+        border-radius: 1.2rem;
+        box-shadow: 0 0 32px 0 #6366f1, 0 8px 32px rgba(36,37,46,0.25);
+        padding: 2.2rem 2.2rem 2.2rem 2.2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 320px;
+        min-height: 320px;
+        max-width: 420px;
+        max-height: 420px;
+        flex: 1 1 340px;
+    }
+    .detalle-img-box img {
+        max-width: 320px;
+        max-height: 320px;
+        width: 100%;
+        height: auto;
+        border-radius: 1rem;
+        background: #fff;
+        opacity: 0;
+        transform: scale(0.96);
+        animation: imgFadeInZoom 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.1s forwards;
+    }
+    @keyframes imgFadeInZoom {
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+    .detalle-info-glass {
+        background: rgba(36, 37, 46, 0.92);
+        border-radius: 1.5rem;
+        box-shadow: 0 0 24px 0 #6366f1, 0 4px 24px rgba(36,37,46,0.18);
+        border: 1.5px solid #6366f1;
+        backdrop-filter: blur(8px);
+        padding: 2.2rem 2rem 2rem 2rem;
+        min-width: 320px;
+        max-width: 480px;
+        flex: 1 1 340px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        animation: fadeInUp 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(40px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .detalle-nombre {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.2em;
+        color: #fff;
+    }
+    .detalle-marca-modelo {
+        font-size: 1.1em;
+        margin-bottom: 0.5em;
+        color: #a5b4fc;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+    }
+    .detalle-badges {
+        margin-bottom: 1em;
+    }
+    .detalle-badges .badge {
+        font-size: 0.95em;
+        margin-right: 0.4em;
+        box-shadow: 0 0 6px 0 #6366f1, 0 0 2px #818cf8;
+        padding: 0.45em 0.9em;
+    }
+    .detalle-precio {
+        font-size: 2.2rem;
+        color: #22c55e;
+        font-weight: bold;
+        text-shadow: 0 0 8px #22c55e44;
+        margin-bottom: 0.7em;
+    }
+    .detalle-descripcion {
+        font-size: 1.08em;
+        color: #f3f4f6;
+        margin-bottom: 1.2em;
+        line-height: 1.5;
+    }
+    .detalle-card {
+        background: rgba(255,255,255,0.07);
+        backdrop-filter: blur(2px);
+        border-radius: 1rem;
+        margin-bottom: 1.2em;
+        color: #e0e7ff;
+        font-size: 1em;
+    }
+    .btn-glow {
+        background-color: #6366f1;
+        border-color: #6366f1;
+        color: #fff;
+        box-shadow: 0 0 16px 0 #6366f1, 0 0 4px #818cf8;
+        text-shadow: 0 0 4px #818cf8;
+        transition: box-shadow 0.3s, background 0.3s, color 0.3s;
+        font-size: 1.15em;
+        font-weight: 600;
+        padding: 0.8em 2.2em;
+        border-radius: 0.8em;
+    }
+    .btn-glow:hover, .btn-glow:focus {
+        background-color: #4f46e5;
+        border-color: #4f46e5;
+        box-shadow: 0 0 32px 0 #6366f1;
+        color: #fff;
+    }
+    @media (max-width: 991px) {
+        .detalle-main {
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .detalle-info-glass, .detalle-img-box {
+            min-width: 0;
+            max-width: 100%;
+            padding: 1.2rem 0.7rem;
+        }
+        .detalle-img-box img {
+            max-width: 100%;
+            max-height: 260px;
+        }
+    }
+    .detalle-descripcion-bullets {
+        color: #f3f4f6;
+        margin-bottom: 1.2em;
+        font-size: 1.08em;
+        line-height: 1.5;
+        padding-left: 1.2em;
+    }
+    .detalle-descripcion-bullets li {
+        margin-bottom: 0.4em;
+        position: relative;
+        list-style: none;
+        padding-left: 0.7em;
+    }
+    .detalle-descripcion-bullets li::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0.7em;
+        width: 0.5em;
+        height: 0.5em;
+        border-radius: 50%;
+        background: linear-gradient(120deg, #6366f1 0%, #818cf8 100%);
+        box-shadow: 0 0 8px #6366f1;
+        display: inline-block;
+    }
+</style>
 <div class="container">
-    <div class="row">
-        <div class="col-md-6">
+    <div class="detalle-main">
+        <div class="detalle-img-box">
             {% if producto.imagen_url %}
-                <img src="{{ producto.imagen_url }}" class="img-fluid rounded" alt="{{ producto.nombre }}">
+                <img src="{{ producto.imagen_url }}" class="img-fluid" alt="{{ producto.nombre }}">
             {% else %}
                 <div class="bg-light text-center py-5 rounded">
                     <i class="fas fa-bicycle fa-5x text-muted"></i>
                 </div>
             {% endif %}
         </div>
-        <div class="col-md-6">
-            <h1 class="mb-4">{{ producto.nombre }}</h1>
-            <p class="lead">{{ producto.descripcion }}</p>
-            
-            <div class="card mb-4">
-                <div class="card-body">
-                    <h5 class="card-title">Detalles del Producto</h5>
-                    <ul class="list-unstyled">
-                        <li><strong>Precio:</strong> ${{ producto.precio }}</li>
-                        <li><strong>Estado:</strong> {{ producto.get_estado_display }}</li>
-                        <li><strong>Categoría:</strong> {{ producto.get_tipo_display }}</li>
-                    </ul>
+        <div class="detalle-info-glass">
+            <div class="detalle-nombre">{{ producto.nombre }}</div>
+            {% if producto.marca or producto.modelo %}
+                <div class="mb-3 d-flex flex-wrap align-items-center gap-2">
+                    {% if producto.marca %}
+                        <span class="badge bg-info text-dark d-flex align-items-center gap-1" style="font-size:1em;box-shadow:0 0 8px #6366f1;">
+                            <i class="fas fa-industry"></i> {{ producto.marca }}
+                        </span>
+                    {% endif %}
+                    {% if producto.modelo %}
+                        <span class="badge bg-primary d-flex align-items-center gap-1" style="font-size:1em;box-shadow:0 0 8px #6366f1;">
+                            <i class="fas fa-tag"></i> {{ producto.modelo }}
+                        </span>
+                    {% endif %}
                 </div>
+            {% endif %}
+            <div class="detalle-badges">
+                <span class="badge bg-success">{{ producto.get_estado_display }}</span>
+                <span class="badge bg-primary">{{ producto.get_tipo_display }}</span>
             </div>
-
+            <div class="detalle-precio">US${{ producto.precio|floatformat:2|intcomma }}</div>
+            {# Descripción con formato de bullets si es posible #}
+            {% if descripcion_bullets %}
+                <ul class="detalle-descripcion-bullets">
+                    {% for frase in descripcion_bullets %}
+                        <li>{{ frase }}.</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <div class="detalle-descripcion">{{ producto.descripcion }}</div>
+            {% endif %}
+            <div class="detalle-card card p-3 mb-3">
+                <h6 class="mb-2">Detalles del Producto</h6>
+                <ul class="list-unstyled mb-0">
+                    <li><strong>Precio:</strong> US${{ producto.precio|floatformat:2|intcomma }}</li>
+                    <li><strong>Estado:</strong> {{ producto.get_estado_display }}</li>
+                    <li><strong>Categoría:</strong> {{ producto.get_tipo_display }}</li>
+                </ul>
+            </div>
             {% if user.is_authenticated %}
-                <a href="{% url 'arriendos:nuevo' %}?producto={{ producto.id }}" class="btn btn-primary btn-lg">
+                <a href="{% url 'arriendos:nuevo' %}?producto={{ producto.id }}" class="btn btn-glow btn-lg mt-2">
                     <i class="fas fa-shopping-cart me-2"></i>Arrendar
                 </a>
             {% else %}
-                <div class="alert alert-info">
+                <div class="alert alert-info mt-2">
                     <i class="fas fa-info-circle me-2"></i>
                     Debes <a href="{% url 'usuarios:login' %}">iniciar sesión</a> para arrendar este producto.
                 </div>
