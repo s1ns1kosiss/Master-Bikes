@@ -165,6 +165,67 @@
         box-shadow: 0 0 8px #6366f1;
         display: inline-block;
     }
+
+    /* --- Estilos para Modo Claro --- */
+    body:not(.dark-mode) .detalle-img-box {
+        background: #f8f9fa; /* Un fondo gris muy claro */
+        box-shadow: 0 8px 24px rgba(0,0,0,0.1); /* Sombra suave */
+        border: 1px solid #dee2e6; /* Borde sutil */
+    }
+
+    body:not(.dark-mode) .detalle-info-glass {
+        background: #ffffff; /* Fondo blanco */
+        box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        border: 1px solid #dee2e6;
+        backdrop-filter: none; /* Sin blur en modo claro */
+    }
+
+    body:not(.dark-mode) .detalle-nombre {
+        color: #212529; /* Texto oscuro */
+    }
+
+    body:not(.dark-mode) .detalle-marca-modelo {
+        color: #495057; /* Texto secundario oscuro */
+    }
+
+    body:not(.dark-mode) .detalle-badges .badge {
+        box-shadow: none; /* Sin sombra neón en badges */
+    }
+    
+    body:not(.dark-mode) .detalle-precio {
+        color: #198754; /* Verde estándar de Bootstrap */
+        text-shadow: none;
+    }
+
+    body:not(.dark-mode) .detalle-descripcion,
+    body:not(.dark-mode) .detalle-descripcion-bullets {
+        color: #343a40; /* Texto de párrafo oscuro */
+    }
+
+    body:not(.dark-mode) .detalle-card {
+        background: #f8f9fa;
+        color: #212529;
+    }
+    
+    body:not(.dark-mode) .detalle-descripcion-bullets li::before {
+        background: linear-gradient(120deg, #0d6efd 0%, #6c757d 100%);
+        box-shadow: none;
+    }
+    
+    body:not(.dark-mode) .btn-glow {
+        background-color: #0d6efd; /* Azul estándar de Bootstrap */
+        border-color: #0d6efd;
+        color: #fff;
+        box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+        text-shadow: none;
+    }
+
+    body:not(.dark-mode) .btn-glow:hover, 
+    body:not(.dark-mode) .btn-glow:focus {
+        background-color: #0b5ed7;
+        border-color: #0a58ca;
+        box-shadow: 0 6px 16px rgba(0, 123, 255, 0.4);
+    }
 </style>
 <div class="container">
     <div class="detalle-main">
