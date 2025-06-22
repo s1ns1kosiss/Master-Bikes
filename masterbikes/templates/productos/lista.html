@@ -3,28 +3,106 @@
 {% block title %}Productos - MasterBikes{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
+{% load humanize %}
+<style>
+    .producto-card {
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .producto-card:hover {
+        transform: translateY(-8px) scale(1.03);
+        box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+        z-index: 2;
+    }
+    .precio-destacado {
+        font-size: 1.4rem;
+        color: #198754;
+        font-weight: bold;
+    }
+    .placeholder-img {
+        background: linear-gradient(135deg, #e0e0e0 60%, #f8f9fa 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 220px;
+        border-radius: 0.375rem 0.375rem 0 0;
+    }
+    .fade-in {
+        animation: fadeIn 0.7s;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+</style>
+<div class="container mt-4 fade-in">
     <h1 class="mb-4">Catálogo de Productos</h1>
-    <div class="row">
+    <form method="get" class="mb-4 d-flex align-items-center gap-2 flex-wrap">
+        <input type="text" name="q" class="form-control w-auto me-3" placeholder="Buscar por nombre o marca" value="{{ q }}" style="min-width:180px;">
+        <label for="tipo" class="form-label mb-0 me-2">Tipo:</label>
+        <select name="tipo" id="tipo" class="form-select w-auto me-3" onchange="this.form.submit()">
+            <option value="" {% if not tipo %}selected{% endif %}>Todos</option>
+            <option value="BICICLETA" {% if tipo == 'BICICLETA' %}selected{% endif %}>Bicicleta</option>
+            <option value="ACCESORIO" {% if tipo == 'ACCESORIO' %}selected{% endif %}>Accesorio</option>
+        </select>
+        <label for="estado" class="form-label mb-0 me-2">Estado:</label>
+        <select name="estado" id="estado" class="form-select w-auto me-3" onchange="this.form.submit()">
+            <option value="" {% if not estado %}selected{% endif %}>Todos</option>
+            <option value="DISPONIBLE" {% if estado == 'DISPONIBLE' %}selected{% endif %}>Disponible</option>
+            <option value="RESERVADO" {% if estado == 'RESERVADO' %}selected{% endif %}>Reservado</option>
+            <option value="EN_REPARACION" {% if estado == 'EN_REPARACION' %}selected{% endif %}>En reparación</option>
+            <option value="NO_DISPONIBLE" {% if estado == 'NO_DISPONIBLE' %}selected{% endif %}>No disponible</option>
+        </select>
+        <label for="orden" class="form-label mb-0 me-2">Ordenar por:</label>
+        <select name="orden" id="orden" class="form-select w-auto" onchange="this.form.submit()">
+            <option value="nombre_asc" {% if orden == 'nombre_asc' %}selected{% endif %}>Nombre (A-Z)</option>
+            <option value="nombre_desc" {% if orden == 'nombre_desc' %}selected{% endif %}>Nombre (Z-A)</option>
+            <option value="precio_asc" {% if orden == 'precio_asc' %}selected{% endif %}>Precio (menor a mayor)</option>
+            <option value="precio_desc" {% if orden == 'precio_desc' %}selected{% endif %}>Precio (mayor a menor)</option>
+            <option value="stock_asc" {% if orden == 'stock_asc' %}selected{% endif %}>Stock (menor a mayor)</option>
+            <option value="stock_desc" {% if orden == 'stock_desc' %}selected{% endif %}>Stock (mayor a menor)</option>
+        </select>
+        <button type="submit" class="btn btn-outline-primary ms-2">Buscar</button>
+    </form>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
         {% for producto in productos %}
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 producto-card">
                 {% if producto.imagen_url %}
-                    <img src="{{ producto.imagen_url }}" class="card-img-top" alt="{{ producto.nombre }}">
+                    <img src="{{ producto.imagen_url }}" class="card-img-top" alt="{{ producto.nombre }}" style="object-fit:cover; height:220px;">
                 {% else %}
-                    <div class="bg-light text-center py-5 rounded">
-                        <i class="fas fa-bicycle fa-3x text-muted"></i>
+                    <div class="placeholder-img">
+                        <svg width="64" height="64" fill="#adb5bd" viewBox="0 0 16 16">
+                            <path d="M8 3a5 5 0 1 0 0 10A5 5 0 0 0 8 3zm0 1a4 4 0 1 1 0 8A4 4 0 0 1 8 4zm0 2a2 2 0 1 0 0 4A2 2 0 0 0 8 6z"/>
+                        </svg>
                     </div>
                 {% endif %}
                 <div class="card-body">
-                    <h5 class="card-title">{{ producto.nombre }}</h5>
-                    <p class="card-text">{{ producto.descripcion|truncatewords:15 }}</p>
-                    <ul class="list-unstyled mb-2">
-                        <li><strong>Precio:</strong> ${{ producto.precio }}</li>
-                        <li><strong>Estado:</strong> {{ producto.get_estado_display }}</li>
-                        <li><strong>Categoría:</strong> {{ producto.get_tipo_display }}</li>
-                    </ul>
-                    <a href="{% url 'productos:detalle' producto.id %}" class="btn btn-outline-primary btn-sm">Ver Detalle</a>
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="badge 
+                            {% if producto.estado == 'DISPONIBLE' %}bg-success
+                            {% elif producto.estado == 'RESERVADO' %}bg-warning text-dark
+                            {% elif producto.estado == 'EN_REPARACION' %}bg-danger
+                            {% else %}bg-secondary{% endif %}">
+                            {{ producto.get_estado_display }}
+                        </span>
+                        <span class="badge bg-primary">{{ producto.get_tipo_display }}</span>
+                        <span class="badge bg-info text-dark">Stock: {{ producto.stock }}</span>
+                    </div>
+                    <h5 class="card-title mb-1">{{ producto.nombre }}</h5>
+                    {% if producto.marca or producto.modelo %}
+                        <p class="mb-1 text-muted" style="font-size:0.95em;">
+                            {% if producto.marca %}<strong>{{ producto.marca }}</strong>{% endif %}
+                            {% if producto.modelo %}{{ producto.modelo }}{% endif %}
+                        </p>
+                    {% endif %}
+                    <p class="precio-destacado mb-2">US${{ producto.precio|floatformat:2|intcomma }}</p>
+                    <p class="card-text mb-2">{{ producto.descripcion|truncatewords:15 }}</p>
+                </div>
+                <div class="card-footer bg-transparent border-0">
+                    <a href="{% url 'productos:detalle' producto.id %}" class="btn btn-primary w-100 fw-bold mb-1">Ver Detalle</a>
+                    {% if producto.estado == 'DISPONIBLE' %}
+                        <a href="#" class="btn btn-outline-success w-100">Arrendar</a>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -34,5 +112,32 @@
         </div>
         {% endfor %}
     </div>
+    {% if page_obj.has_other_pages %}
+    <nav aria-label="Paginación de productos" class="mt-4">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?{% if q %}q={{ q|urlencode }}&amp;{% endif %}{% if tipo %}tipo={{ tipo }}&amp;{% endif %}{% if estado %}estado={{ estado }}&amp;{% endif %}{% if orden %}orden={{ orden }}&amp;{% endif %}page={{ page_obj.previous_page_number }}">Anterior</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled"><span class="page-link">Anterior</span></li>
+            {% endif %}
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <li class="page-item"><a class="page-link" href="?{% if q %}q={{ q|urlencode }}&amp;{% endif %}{% if tipo %}tipo={{ tipo }}&amp;{% endif %}{% if estado %}estado={{ estado }}&amp;{% endif %}{% if orden %}orden={{ orden }}&amp;{% endif %}page={{ num }}">{{ num }}</a></li>
+                {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?{% if q %}q={{ q|urlencode }}&amp;{% endif %}{% if tipo %}tipo={{ tipo }}&amp;{% endif %}{% if estado %}estado={{ estado }}&amp;{% endif %}{% if orden %}orden={{ orden }}&amp;{% endif %}page={{ page_obj.next_page_number }}">Siguiente</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled"><span class="page-link">Siguiente</span></li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
 </div>
 {% endblock %} 
